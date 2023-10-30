@@ -1,0 +1,2 @@
+iverilog -g2012  -D SPEEDSIM  -DFUNCTIONAL -DSIM -DWFDUMP -I ../src -I ../lib -I ../model -I $PDK_ROOT/sky130A  tb_top.v  -o tb_top.vvp
+vvp tb_top.vvp

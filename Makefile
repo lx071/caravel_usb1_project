@@ -19,6 +19,8 @@ export CARAVEL_ROOT?=$(PWD)/caravel
 PRECHECK_ROOT?=${HOME}/mpw_precheck
 export MCW_ROOT?=$(PWD)/mgmt_core_wrapper
 SIM?=RTL
+DUMP?=OFF
+RISC_CORE ?=0
 
 # Install lite version of caravel, (1): caravel-lite, (0): caravel
 CARAVEL_LITE?=1
@@ -28,24 +30,13 @@ export PDK?=sky130A
 #export PDK?=gf180mcuC
 export PDKPATH?=$(PDK_ROOT)/$(PDK)
 
-PYTHON_BIN ?= python3
 
-ROOTLESS ?= 0
-USER_ARGS = -u $$(id -u $$USER):$$(id -g $$USER)
-ifeq ($(ROOTLESS), 1)
-	USER_ARGS =
-endif
-export OPENLANE_ROOT?=$(PWD)/dependencies/openlane_src
-export PDK_ROOT?=$(PWD)/dependencies/pdks
-export DISABLE_LVS?=0
-
-export ROOTLESS
 
 ifeq ($(PDK),sky130A)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
-	export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
-	export OPENLANE_TAG?=2023.07.19
-	MPW_TAG ?= mpw-9e
+	export OPEN_PDKS_COMMIT?=0059588eebfc704681dc2368bd1d33d96281d10f
+	export OPENLANE_TAG?=2022.10.20
+	MPW_TAG ?= mpw-7g
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -59,11 +50,24 @@ endif
 
 endif
 
+#RISCV COMPLIANCE test Environment
+COREMARK_DIR   = verilog/dv/riscv_regress/dependencies/coremark
+RISCV_COMP_DIR = verilog/dv/riscv_regress/dependencies/riscv-compliance
+RISCV_TEST_DIR = verilog/dv/riscv_regress/dependencies/riscv-tests
+
+COREMARK_REPO   =  https://github.com/eembc/coremark
+RISCV_COMP_REPO =  https://github.com/riscv/riscv-compliance
+RISCV_TEST_REPO =  https://github.com/riscv/riscv-tests
+
+COREMARK_BRANCH   =  7f420b6bdbff436810ef75381059944e2b0d79e8
+RISCV_COMP_BRANCH =  d51259b2a949be3af02e776c39e135402675ac9b
+RISCV_TEST_BRANCH =  e30978a71921159aec38eeefd848fca4ed39a826
+
 ifeq ($(PDK),sky130B)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
-	export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
-	export OPENLANE_TAG?=2023.07.19
-	MPW_TAG ?= mpw-9e
+	export OPEN_PDKS_COMMIT?=0059588eebfc704681dc2368bd1d33d96281d10f
+	export OPENLANE_TAG?=2022.10.20
+	MPW_TAG ?= mpw-7g
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -79,20 +83,20 @@ endif
 
 ifeq ($(PDK),gf180mcuC)
 
-	MPW_TAG ?= gfmpw-0b
+	MPW_TAG ?= gfmpw-0a
 	CARAVEL_NAME := caravel
 	CARAVEL_REPO := https://github.com/efabless/caravel-gf180mcu
 	CARAVEL_TAG := $(MPW_TAG)
 	#OPENLANE_TAG=ddfeab57e3e8769ea3d40dda12be0460e09bb6d9
-	export OPEN_PDKS_COMMIT?=e6f9c8876da77220403014b116761b0b2d79aab4
-	export OPENLANE_TAG?=2023.02.23
+	export OPEN_PDKS_COMMIT?=0059588eebfc704681dc2368bd1d33d96281d10f
+	export OPENLANE_TAG?=2022.11.17
 
 endif
 
 # Include Caravel Makefile Targets
 .PHONY: % : check-caravel
 %:
-	export CARAVEL_ROOT=$(CARAVEL_ROOT) && export MPW_TAG=$(MPW_TAG) && $(MAKE) -f $(CARAVEL_ROOT)/Makefile $@
+	export CARAVEL_ROOT=$(CARAVEL_ROOT) && $(MAKE) -f $(CARAVEL_ROOT)/Makefile $@
 
 .PHONY: install
 install:
@@ -106,15 +110,10 @@ install:
 # Install DV setup
 .PHONY: simenv
 simenv:
-	docker pull efabless/dv:latest
-
-# Install cocotb docker
-.PHONY: simenv-cocotb
-simenv-cocotb:
-	docker pull efabless/dv:cocotb
+	docker pull riscduino/dv_setup:mpw7
 
 .PHONY: setup
-setup: check_dependencies install check-env install_mcw openlane pdk-with-volare setup-timing-scripts setup-cocotb precheck
+setup: install check-env install_mcw openlane pdk-with-volare setup-timing-scripts
 
 # Openlane
 blocks=$(shell cd openlane && find * -maxdepth 0 -type d)
@@ -122,78 +121,27 @@ blocks=$(shell cd openlane && find * -maxdepth 0 -type d)
 $(blocks): % :
 	$(MAKE) -C openlane $*
 
-dv_patterns=$(shell cd verilog/dv && find * -maxdepth 0 -type d)
-cocotb-dv_patterns=$(shell cd verilog/dv/cocotb && find . -name "*.c"  | sed -e 's|^.*/||' -e 's/.c//')
-dv-targets-rtl=$(dv_patterns:%=verify-%-rtl)
-cocotb-dv-targets-rtl=$(cocotb-dv_patterns:%=cocotb-verify-%-rtl)
-dv-targets-gl=$(dv_patterns:%=verify-%-gl)
-cocotb-dv-targets-gl=$(cocotb-dv_patterns:%=cocotb-verify-%-gl)
-dv-targets-gl-sdf=$(dv_patterns:%=verify-%-gl-sdf)
 
+PATTERNS=$(shell cd verilog/dv && find * -maxdepth 0 -type d)
+DV_PATTERNS = $(foreach dv, $(PATTERNS), verify-$(dv))
 TARGET_PATH=$(shell pwd)
-verify_command="source ~/.bashrc && cd ${TARGET_PATH}/verilog/dv/$* && export SIM=${SIM} && make"
-dv_base_dependencies=simenv
-docker_run_verify=\
-	docker run \
-		$(USER_ARGS) \
-		-v ${TARGET_PATH}:${TARGET_PATH} -v ${PDK_ROOT}:${PDK_ROOT} \
-		-v ${CARAVEL_ROOT}:${CARAVEL_ROOT} \
-		-v ${MCW_ROOT}:${MCW_ROOT} \
-		-e TARGET_PATH=${TARGET_PATH} -e PDK_ROOT=${PDK_ROOT} \
-		-e CARAVEL_ROOT=${CARAVEL_ROOT} \
-		-e TOOLS=/foss/tools/riscv-gnu-toolchain-rv32i/217e7f3debe424d61374d31e33a091a630535937 \
+verify_command="cd ${TARGET_PATH}/verilog/dv/$* && export SIM=${SIM} DUMP=${DUMP} RISC_CORE=${RISC_CORE} && make"
+$(DV_PATTERNS): verify-% : ./verilog/dv/%  check-coremark_repo check-riscv_comp_repo check-riscv_test_repo
+	docker run -v ${TARGET_PATH}:${TARGET_PATH} \
+		-e TARGET_PATH=${TARGET_PATH} \
+		-e TOOLS=/opt/riscv32i \
 		-e DESIGNS=$(TARGET_PATH) \
-		-e USER_PROJECT_VERILOG=$(TARGET_PATH)/verilog \
-		-e PDK=$(PDK) \
-		-e CORE_VERILOG_PATH=$(TARGET_PATH)/mgmt_core_wrapper/verilog \
-		-e CARAVEL_VERILOG_PATH=$(TARGET_PATH)/caravel/verilog \
-		-e MCW_ROOT=$(MCW_ROOT) \
-		efabless/dv:latest \
+		-e GCC_PREFIX=riscv32-unknown-elf \
+		-u $$(id -u $$USER):$$(id -g $$USER) riscduino/dv_setup:mpw7 \
 		sh -c $(verify_command)
 
-.PHONY: harden
-harden: $(blocks)
 
 .PHONY: verify
-verify: $(dv-targets-rtl)
+verify: 
+	cd ./verilog/dv/ && \
+	export SIM=${SIM} DUMP=${DUMP} && \
+		$(MAKE) -j$(THREADS)
 
-.PHONY: verify-all-rtl
-verify-all-rtl: $(dv-targets-rtl)
-
-.PHONY: verify-all-gl
-verify-all-gl: $(dv-targets-gl)
-
-.PHONY: verify-all-gl-sdf
-verify-all-gl-sdf: $(dv-targets-gl-sdf)
-
-$(dv-targets-rtl): SIM=RTL
-$(dv-targets-rtl): verify-%-rtl: $(dv_base_dependencies)
-	$(docker_run_verify)
-
-$(dv-targets-gl): SIM=GL
-$(dv-targets-gl): verify-%-gl: $(dv_base_dependencies)
-	$(docker_run_verify)
-
-$(dv-targets-gl-sdf): SIM=GL_SDF
-$(dv-targets-gl-sdf): verify-%-gl-sdf: $(dv_base_dependencies)
-	$(docker_run_verify)
-
-clean-targets=$(blocks:%=clean-%)
-.PHONY: $(clean-targets)
-$(clean-targets): clean-% :
-	rm -f ./verilog/gl/$*.v
-	rm -f ./spef/$*.spef
-	rm -f ./sdc/$*.sdc
-	rm -f ./sdf/$*.sdf
-	rm -f ./gds/$*.gds
-	rm -f ./mag/$*.mag
-	rm -f ./lef/$*.lef
-	rm -f ./maglef/*.maglef
-
-make_what=setup $(blocks) $(dv-targets-rtl) $(dv-targets-gl) $(dv-targets-gl-sdf) $(clean-targets)
-.PHONY: what
-what:
-	# $(make_what)
 
 # Install Openlane
 .PHONY: openlane
@@ -235,53 +183,24 @@ uninstall:
 # Default installs to the user home directory, override by "export PRECHECK_ROOT=<precheck-installation-path>"
 .PHONY: precheck
 precheck:
-	if [ -d "$(PRECHECK_ROOT)" ]; then\
-		echo "Deleting exisiting $(PRECHECK_ROOT)" && \
-		rm -rf $(PRECHECK_ROOT) && sleep 2;\
-	fi
-	@echo "Installing Precheck.."
 	@git clone --depth=1 --branch $(MPW_TAG) https://github.com/efabless/mpw_precheck.git $(PRECHECK_ROOT)
 	@docker pull efabless/mpw_precheck:latest
 
 .PHONY: run-precheck
 run-precheck: check-pdk check-precheck
-	@if [ "$$DISABLE_LVS" = "1" ]; then\
-		$(eval INPUT_DIRECTORY := $(shell pwd)) \
-		cd $(PRECHECK_ROOT) && \
-		docker run -it -v $(PRECHECK_ROOT):$(PRECHECK_ROOT) \
-		-v $(INPUT_DIRECTORY):$(INPUT_DIRECTORY) \
-		-v $(PDK_ROOT):$(PDK_ROOT) \
-		-e INPUT_DIRECTORY=$(INPUT_DIRECTORY) \
-		-e PDK_PATH=$(PDK_ROOT)/$(PDK) \
-		-e PDK_ROOT=$(PDK_ROOT) \
-		-e PDKPATH=$(PDKPATH) \
-		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
-		efabless/mpw_precheck:latest bash -c "cd $(PRECHECK_ROOT) ; python3 mpw_precheck.py --input_directory $(INPUT_DIRECTORY) --pdk_path $(PDK_ROOT)/$(PDK) license makefile default documentation consistency gpio_defines xor magic_drc klayout_feol klayout_beol klayout_offgrid klayout_met_min_ca_density klayout_pin_label_purposes_overlapping_drawing klayout_zeroarea"; \
-	else \
-		$(eval INPUT_DIRECTORY := $(shell pwd)) \
-		cd $(PRECHECK_ROOT) && \
-		docker run -it -v $(PRECHECK_ROOT):$(PRECHECK_ROOT) \
-		-v $(INPUT_DIRECTORY):$(INPUT_DIRECTORY) \
-		-v $(PDK_ROOT):$(PDK_ROOT) \
-		-e INPUT_DIRECTORY=$(INPUT_DIRECTORY) \
-		-e PDK_PATH=$(PDK_ROOT)/$(PDK) \
-		-e PDK_ROOT=$(PDK_ROOT) \
-		-e PDKPATH=$(PDKPATH) \
-		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
-		efabless/mpw_precheck:latest bash -c "cd $(PRECHECK_ROOT) ; python3 mpw_precheck.py --input_directory $(INPUT_DIRECTORY) --pdk_path $(PDK_ROOT)/$(PDK)"; \
-	fi
-
-
-BLOCKS = $(shell cd lvs && find * -maxdepth 0 -type d)
-LVS_BLOCKS = $(foreach block, $(BLOCKS), lvs-$(block))
-$(LVS_BLOCKS): lvs-% : ./lvs/%/lvs_config.json check-pdk check-precheck
-	@$(eval INPUT_DIRECTORY := $(shell pwd))
-	@cd $(PRECHECK_ROOT) && \
+	$(eval INPUT_DIRECTORY := $(shell pwd))
+	cd $(PRECHECK_ROOT) && \
 	docker run -v $(PRECHECK_ROOT):$(PRECHECK_ROOT) \
 	-v $(INPUT_DIRECTORY):$(INPUT_DIRECTORY) \
 	-v $(PDK_ROOT):$(PDK_ROOT) \
+	-e INPUT_DIRECTORY=$(INPUT_DIRECTORY) \
+	-e PDK_PATH=$(PDK_ROOT)/$(PDK) \
+	-e PDK_ROOT=$(PDK_ROOT) \
+	-e PDKPATH=$(PDKPATH) \
 	-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
-	efabless/mpw_precheck:latest bash -c "export PYTHONPATH=$(PRECHECK_ROOT) ; cd $(PRECHECK_ROOT) ; python3 checks/lvs_check/lvs.py --pdk_path $(PDK_ROOT)/$(PDK) --design_directory $(INPUT_DIRECTORY) --output_directory $(INPUT_DIRECTORY)/lvs --design_name $* --config_file $(INPUT_DIRECTORY)/lvs/$*/lvs_config.json"
+	efabless/mpw_precheck:latest bash -c "cd $(PRECHECK_ROOT) ; python3 mpw_precheck.py --input_directory $(INPUT_DIRECTORY) --pdk_path $(PDK_ROOT)/$(PDK)"
+
+
 
 .PHONY: clean
 clean:
@@ -306,59 +225,65 @@ check-pdk:
 		exit 1; \
 	fi
 
+check-coremark_repo:
+	@if [ ! -d "$(COREMARK_DIR)" ]; then \
+		echo "Installing Core Mark Repo.."; \
+		git clone $(COREMARK_REPO) $(COREMARK_DIR); \
+		cd $(COREMARK_DIR); git checkout $(COREMARK_BRANCH); \
+	fi
+
+check-riscv_comp_repo:
+	@if [ ! -d "$(RISCV_COMP_DIR)" ]; then \
+		echo "Installing Risc V Complance Repo.."; \
+		git clone $(RISCV_COMP_REPO) $(RISCV_COMP_DIR); \
+		cd $(RISCV_COMP_DIR); git checkout $(RISCV_COMP_BRANCH); \
+	fi
+
+check-riscv_test_repo:
+	@if [ ! -d "$(RISCV_TEST_DIR)" ]; then \
+		echo "Installing RiscV Test Repo.."; \
+		git clone $(RISCV_TEST_REPO) $(RISCV_TEST_DIR); \
+		cd $(RISCV_TEST_DIR); git checkout $(RISCV_TEST_BRANCH); \
+	fi
+
+zip:
+	gzip -f -r lef/*
+	gzip -f -r gds/*
+	gzip -f -r spef/*
+	gzip -f -r spi/lvs/*
+	gzip -f -r verilog/gl/*
+
+unzip:
+	gzip -d -r lef/*
+	gzip -d -r gds/*
+	gzip -d -r spef/*
+	gzip -d -r spi/lvs/*
+	gzip -d -r verilog/gl/*
+
 .PHONY: help
 help:
 	cd $(CARAVEL_ROOT) && $(MAKE) help
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
-.PHONY: check_dependencies
-check_dependencies:
-	@if [ ! -d "$(PWD)/dependencies" ]; then \
-		mkdir $(PWD)/dependencies; \
-	fi
-
 
 export CUP_ROOT=$(shell pwd)
-export TIMING_ROOT?=$(shell pwd)/dependencies/timing-scripts
+export TIMING_ROOT?=$(shell pwd)/deps/timing-scripts
 export PROJECT_ROOT=$(CUP_ROOT)
 timing-scripts-repo=https://github.com/efabless/timing-scripts.git
 
 $(TIMING_ROOT):
-	@mkdir -p $(CUP_ROOT)/dependencies
+	@mkdir -p $(CUP_ROOT)/deps
 	@git clone $(timing-scripts-repo) $(TIMING_ROOT)
 
 .PHONY: setup-timing-scripts
 setup-timing-scripts: $(TIMING_ROOT)
 	@( cd $(TIMING_ROOT) && git pull )
 	@#( cd $(TIMING_ROOT) && git fetch && git checkout $(MPW_TAG); )
-
-.PHONY: install-caravel-cocotb
-install-caravel-cocotb:
-	rm -rf ./venv-cocotb
-	$(PYTHON_BIN) -m venv ./venv-cocotb
-	./venv-cocotb/bin/$(PYTHON_BIN) -m pip install --upgrade --no-cache-dir pip
-	./venv-cocotb/bin/$(PYTHON_BIN) -m pip install --upgrade --no-cache-dir caravel-cocotb
-
-.PHONY: setup-cocotb-env
-setup-cocotb-env:
-	@(python3 $(PROJECT_ROOT)/verilog/dv/setup-cocotb.py $(CARAVEL_ROOT) $(MCW_ROOT) $(PDK_ROOT) $(PDK) $(PROJECT_ROOT))
-
-.PHONY: setup-cocotb
-setup-cocotb: install-caravel-cocotb setup-cocotb-env simenv-cocotb
-
-.PHONY: cocotb-verify-all-rtl
-cocotb-verify-all-rtl: 
-	@(cd $(PROJECT_ROOT)/verilog/dv/cocotb && $(PROJECT_ROOT)/venv-cocotb/bin/caravel_cocotb -tl user_proj_tests/user_proj_tests.yaml )
-	
-.PHONY: cocotb-verify-all-gl
-cocotb-verify-all-gl:
-	@(cd $(PROJECT_ROOT)/verilog/dv/cocotb && $(PROJECT_ROOT)/venv-cocotb/bin/caravel_cocotb -tl user_proj_tests/user_proj_tests_gl.yaml -verbosity quiet)
-
-$(cocotb-dv-targets-rtl): cocotb-verify-%-rtl: 
-	@(cd $(PROJECT_ROOT)/verilog/dv/cocotb && $(PROJECT_ROOT)/venv-cocotb/bin/caravel_cocotb -t $*  )
-	
-$(cocotb-dv-targets-gl): cocotb-verify-%-gl:
-	@(cd $(PROJECT_ROOT)/verilog/dv/cocotb && $(PROJECT_ROOT)/venv-cocotb/bin/caravel_cocotb -t $* -verbosity quiet)
+	@python3 -m venv ./venv 
+		. ./venv/bin/activate && \
+		python3 -m pip install --upgrade pip && \
+		python3 -m pip install -r $(TIMING_ROOT)/requirements.txt && \
+		deactivate
 
 ./verilog/gl/user_project_wrapper.v:
 	$(error you don't have $@)
@@ -371,59 +296,42 @@ $(cocotb-dv-targets-gl): cocotb-verify-%-gl:
 
 .PHONY: create-spef-mapping
 create-spef-mapping: ./verilog/gl/user_project_wrapper.v
-	docker run \
-		--rm \
-		$(USER_ARGS) \
-		-v $(PDK_ROOT):$(PDK_ROOT) \
-		-v $(CUP_ROOT):$(CUP_ROOT) \
-		-v $(CARAVEL_ROOT):$(CARAVEL_ROOT) \
-		-v $(MCW_ROOT):$(MCW_ROOT) \
-		-v $(TIMING_ROOT):$(TIMING_ROOT) \
-		-w $(shell pwd) \
-		efabless/timing-scripts:latest \
+	@. ./venv/bin/activate && \
 		python3 $(TIMING_ROOT)/scripts/generate_spef_mapping.py \
 			-i ./verilog/gl/user_project_wrapper.v \
 			-o ./env/spef-mapping.tcl \
 			--pdk-path $(PDK_ROOT)/$(PDK) \
-			--macro-parent chip_core/mprj \
-			--project-root "$(CUP_ROOT)"
-
+			--macro-parent mprj \
+			--project-root "$(CUP_ROOT)" && \
+		deactivate
 
 .PHONY: extract-parasitics
 extract-parasitics: ./verilog/gl/user_project_wrapper.v
-	docker run \
-		--rm \
-		$(USER_ARGS) \
-		-v $(PDK_ROOT):$(PDK_ROOT) \
-		-v $(CUP_ROOT):$(CUP_ROOT) \
-		-v $(CARAVEL_ROOT):$(CARAVEL_ROOT) \
-		-v $(MCW_ROOT):$(MCW_ROOT) \
-		-v $(TIMING_ROOT):$(TIMING_ROOT) \
-		-w $(shell pwd) \
-		efabless/timing-scripts:latest \
+	@. ./venv/bin/activate && \
 		python3 $(TIMING_ROOT)/scripts/get_macros.py \
-			-i ./verilog/gl/user_project_wrapper.v \
-			-o ./tmp-macros-list \
-			--project-root "$(CUP_ROOT)" \
-			--pdk-path $(PDK_ROOT)/$(PDK)
-	@cat ./tmp-macros-list | cut -d " " -f2 \
-		| xargs -I % bash -c "$(MAKE) -C $(TIMING_ROOT) \
-			-f $(TIMING_ROOT)/timing.mk rcx-% || echo 'Cannot extract %. Probably no def for this macro'"
+		-i ./verilog/gl/user_project_wrapper.v \
+		-o ./tmp-macros-list \
+		--project-root "$(CUP_ROOT)" \
+		--pdk-path $(PDK_ROOT)/$(PDK) && \
+		deactivate
+		@cat ./tmp-macros-list | cut -d " " -f2 \
+			| xargs -I % bash -c "$(MAKE) -C $(TIMING_ROOT) \
+				-f $(TIMING_ROOT)/timing.mk rcx-% || echo 'Cannot extract %. Probably no def for this macro'"
 	@$(MAKE) -C $(TIMING_ROOT) -f $(TIMING_ROOT)/timing.mk rcx-user_project_wrapper
 	@cat ./tmp-macros-list
 	@rm ./tmp-macros-list
 	
 .PHONY: caravel-sta
 caravel-sta: ./env/spef-mapping.tcl
-	@$(MAKE) -C $(TIMING_ROOT) -f $(TIMING_ROOT)/timing.mk caravel-timing-typ -j3
-	@$(MAKE) -C $(TIMING_ROOT) -f $(TIMING_ROOT)/timing.mk caravel-timing-fast -j3
-	@$(MAKE) -C $(TIMING_ROOT) -f $(TIMING_ROOT)/timing.mk caravel-timing-slow -j3
-	@echo =============================================Summary=============================================
-	@find $(PROJECT_ROOT)/signoff/caravel/openlane-signoff/timing/*/ -name "summary.log" | head -n1 \
-		| xargs head -n5 | tail -n1
-	@find $(PROJECT_ROOT)/signoff/caravel/openlane-signoff/timing/*/ -name "summary.log" \
-		| xargs -I {} bash -c "head -n7 {} | tail -n1"
-	@echo =================================================================================================
+	@$(MAKE) -C $(TIMING_ROOT) -f $(TIMING_ROOT)/timing.mk caravel-timing-typ
+	@$(MAKE) -C $(TIMING_ROOT) -f $(TIMING_ROOT)/timing.mk caravel-timing-fast
+	@$(MAKE) -C $(TIMING_ROOT) -f $(TIMING_ROOT)/timing.mk caravel-timing-slow
 	@echo "You can find results for all corners in $(CUP_ROOT)/signoff/caravel/openlane-signoff/timing/"
-	@echo "Check summary.log of a specific corner to point to reports with reg2reg violations" 
-	@echo "Cap and slew violations are inside summary.log file itself"
+
+#Added by Dinesh-A for Klayout Based DRC check
+.PHONY: run-drc
+run-drc: 
+	@echo "run kalyout DRC checks"
+	mkdir -p signoff/user_project_wrapper/openlane-signoff/drc
+	docker run -ti --rm  -v $(PROJECT_ROOT):/project riscduino/openlane:mpw7  sh -c "cd /project && ./scripts/klayout_drc.sh user_project_wrapper "
+

@@ -18,18 +18,35 @@
 // This include is relative to $CARAVEL_PATH (see Makefile)
 #include <defs.h>
 #include <stub.c>
+#include "ext_reg_map.h"
 
-#define reg_mprj_slave (*(volatile uint32_t*)0x30000000)
+
+
+
+
 
 /*
 	Wishbone Test:
 		- Configures MPRJ lower 8-IO pins as outputs
 		- Checks counter value through the wishbone port
 */
+int i = 0; 
+int clk = 0;
+
+void putdword(uint32_t Data)
+{
+	reg_uart_data = Data >> 24; // MSB [31:24];
+	reg_uart_data = Data >> 16; // MSB [23:16];
+	reg_uart_data = Data >> 8;  // MSB [15:8];
+	reg_uart_data = Data;       // MSB [7:0];
+}
+
 
 void main()
 {
 
+	int bFail = 0;
+    char DataIn[5];
 	/* 
 	IO Control Registers
 	| DM     | VTRIP | SLOW  | AN_POL | AN_SEL | AN_EN | MOD_SEL | INP_DIS | HOLDH | OEB_N | MGMT_EN |
@@ -47,7 +64,7 @@ void main()
 	/* Set up the housekeeping SPI to be connected internally so	*/
 	/* that external pin changes don't affect it.			*/
 
-    reg_spi_enable = 1;
+    reg_spi_enable = 0;
     reg_wb_enable = 1;
 	// reg_spimaster_config = 0xa002;	// Enable, prescaler = 2,
                                         // connect to housekeeping SPI
@@ -77,14 +94,49 @@ void main()
     reg_mprj_xfer = 1;
     while (reg_mprj_xfer == 1);
 
-	reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
+    reg_la0_oenb = reg_la0_iena = 0xFFFFFFFF;    // [31:0]
+    reg_la0_data = 0x000;
+    reg_la0_data = 0x001; // Remove Soft Reset
 
     // Flag start of the test
 	reg_mprj_datal = 0xAB600000;
 
-    reg_mprj_slave = 0x00002710;
-    reg_mprj_datal = 0xAB610000;
-    if (reg_mprj_slave == 0x2B3D) {
-        reg_mprj_datal = 0xAB610000;
+    // Remove Wishbone Reset
+    reg_mprj_wbhost_ctrl = 0x1;
+
+    // Remove Reset
+    reg_glbl_cfg0 = 0x01f;
+    
+    // Chip Version ID - Different for score/dcore/qcore
+    if (reg_glbl_chip_id != 0x82681601) bFail = 1;
+    if (bFail == 1) reg_mprj_datal = 0xAB610000;
+
+    // write software write & read Register
+    reg_glbl_soft_reg_0  = 0x11223344; 
+    reg_glbl_soft_reg_1  = 0x22334455; 
+    reg_glbl_soft_reg_2  = 0x33445566; 
+    reg_glbl_soft_reg_3  = 0x44556677; 
+    reg_glbl_soft_reg_4  = 0x55667788; 
+    reg_glbl_soft_reg_5  = 0x66778899; 
+
+
+    if (reg_glbl_soft_reg_0  != 0x11223344) bFail = 1;
+    if (bFail == 1) reg_mprj_datal = 0xAB620000;
+    if (reg_glbl_soft_reg_1  != 0x22334455) bFail = 1;
+    if (bFail == 1) reg_mprj_datal = 0xAB630000;
+    if (reg_glbl_soft_reg_2  != 0x33445566) bFail = 1;
+    if (bFail == 1) reg_mprj_datal = 0xAB640000;
+    if (reg_glbl_soft_reg_3  != 0x44556677) bFail = 1;
+    if (bFail == 1) reg_mprj_datal = 0xAB650000;
+    if (reg_glbl_soft_reg_4 != 0x55667788) bFail = 1;
+    if (bFail == 1) reg_mprj_datal = 0xAB660000;
+    if (reg_glbl_soft_reg_5 != 0x66778899) bFail = 1;
+    if (bFail == 1) reg_mprj_datal = 0xAB670000;
+
+    if(bFail == 0) {
+        reg_mprj_datal = 0xAB6A0000;
+    } else {
+        reg_mprj_datal = 0xAB600000;
     }
+    putdword(reg_mprj_datal);
 }

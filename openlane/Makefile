@@ -12,85 +12,63 @@
 # limitations under the License.
 #
 # SPDX-License-Identifier: Apache-2.0
+#SHELL = sh -xv
 
-MAKEFLAGS+=--warn-undefined-variables
+BLOCKS = $(shell find * -maxdepth 0 -type d)
+CONFIG = $(foreach block,$(BLOCKS), ./$(block)/config.tcl)
+CLEAN = $(foreach block,$(BLOCKS), clean-$(block))
 
-export OPENLANE_RUN_TAG = $(shell date '+%y_%m_%d_%H_%M')
-OPENLANE_TAG ?= 2023.07.19
-OPENLANE_IMAGE_NAME ?= efabless/openlane:$(OPENLANE_TAG)
-designs = $(shell find * -maxdepth 0 -type d)
-current_design = null
+OPENLANE_TAG = mpw9
+OPENLANE_IMAGE_NAME = riscduino/openlane:$(OPENLANE_TAG)
+OPENLANE_BASIC_COMMAND = "cd $(PWD)/../openlane && flow.tcl -design ./$* -save_path .. -save -tag $* -overwrite"
+OPENLANE_INTERACTIVE_COMMAND = "cd $(PWD)/../openlane && flow.tcl -design ./$* -save_path .. -save -tag $* -overwrite -it -file ./$*/interactive.tcl"
 
-ROOTLESS ?= 0
-USER_ARGS = -u $$(id -u $$USER):$$(id -g $$USER)
-ifeq ($(ROOTLESS), 1)
-	USER_ARGS =
-endif
+all: $(BLOCKS)
 
-openlane_cmd = \
-	"flow.tcl \
-	-design $$(realpath ./$*) \
-	-save_path $$(realpath ..) \
-	-save \
-	-tag $(OPENLANE_RUN_TAG) \
-	-overwrite \
-	-ignore_mismatches"
-openlane_cmd_interactive = "flow.tcl -it -file $$(realpath ./$*/interactive.tcl)"
+$(CONFIG) :
+	@echo "Missing $@. Please create a configuration for that design"
+	@exit 1
 
-docker_mounts = \
-	-v $$(realpath $(PWD)/..):$$(realpath $(PWD)/..) \
-	-v $(PDK_ROOT):$(PDK_ROOT) \
-	-v $(CARAVEL_ROOT):$(CARAVEL_ROOT) \
-	-v $(OPENLANE_ROOT):/openlane
+.PHONY: $(BLOCKS)
+$(BLOCKS) : % : ./%/config.tcl
+#ifeq ($(OPENLANE_ROOT),)
+#	@echo "Please export OPENLANE_ROOT"
+#	@exit 1
+#endif
+#ifeq ($(PDK_ROOT),)
+#	@echo "Please export PDK_ROOT"
+#	@exit 1
+#endif
+	@echo "###############################################"
+	@sleep 1
 
-docker_env = \
-	-e PDK_ROOT=$(PDK_ROOT) \
-	-e PDK=$(PDK) \
-	-e MISMATCHES_OK=1 \
-	-e CARAVEL_ROOT=$(CARAVEL_ROOT) \
-	-e OPENLANE_RUN_TAG=$(OPENLANE_RUN_TAG)
-
-ifneq ($(MCW_ROOT),)
-docker_env += -e MCW_ROOT=$(MCW_ROOT)
-docker_mounts += -v $(MCW_ROOT):$(MCW_ROOT)
-endif
-
-docker_startup_mode = $(shell test -t 0 && echo "-it" || echo "--rm" )
-docker_run = \
-	docker run $(docker_startup_mode) \
-	$(USER_ARGS) \
-	$(docker_mounts) \
-	$(docker_env) \
-
-list:
-	@echo $(designs)
-
-.PHONY: $(designs)
-$(designs) : export current_design=$@
-$(designs) : % : ./%/config.json
-ifneq (,$(wildcard ./$(current_design)/interactive.tcl))
-	$(docker_run) \
-		$(OPENLANE_IMAGE_NAME) sh -c $(openlane_cmd_interactive)
-else
-	# $(current_design)
-	mkdir -p ./$*/runs/$(OPENLANE_RUN_TAG) 
-	rm -rf ./$*/runs/$*
-	ln -s $$(realpath ./$*/runs/$(OPENLANE_RUN_TAG)) ./$*/runs/$*
-	$(docker_run) \
-		$(OPENLANE_IMAGE_NAME) sh -c $(openlane_cmd)
-endif
-	@mkdir -p ../signoff/$*/
-	@cp ./$*/runs/$*/OPENLANE_VERSION ../signoff/$*/
-	@cp ./$*/runs/$*/PDK_SOURCES ../signoff/$*/
-	@cp ./$*/runs/$*/reports/*.csv ../signoff/$*/
+	@if [ -f ./$*/interactive.tcl ]; then\
+		docker run --rm  \
+		-v $(PWD)/..:$(PWD)/.. \
+		-e TEST_MISMATCHES=tools \
+		-e MISMATCHES_OK=1 \
+		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
+		$(OPENLANE_IMAGE_NAME) sh -c $(OPENLANE_INTERACTIVE_COMMAND);\
+	else\
+		docker run --rm \
+		-v $(PWD)/..:$(PWD)/.. \
+		-e TEST_MISMATCHES=tools \
+		-e MISMATCHES_OK=1 \
+		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
+		$(OPENLANE_IMAGE_NAME) sh -c $(OPENLANE_BASIC_COMMAND);\
+	fi
+	mkdir -p ../signoff/$*/
+	cp $*/runs/$*/OPENLANE_VERSION ../signoff/$*/
+	cp $*/runs/$*/PDK_SOURCES ../signoff/$*/
+	cp $*/runs/$*/reports/final_summary_report.csv ../signoff/$*/
 
 .PHONY: openlane
 openlane: check-openlane-env
 	if [ -d "$(OPENLANE_ROOT)" ]; then\
 		echo "Deleting exisiting $(OPENLANE_ROOT)" && \
 		rm -rf $(OPENLANE_ROOT) && sleep 2; \
-		fi
-	git clone https://github.com/The-OpenROAD-Project/OpenLane -b $(OPENLANE_TAG) --depth=1 $(OPENLANE_ROOT) && \
+	fi
+	git clone https://github.com/The-OpenROAD-Project/OpenLane --branch=$(OPENLANE_TAG) --depth=1 $(OPENLANE_ROOT) && \
 		cd $(OPENLANE_ROOT) && \
 		export OPENLANE_IMAGE_NAME=efabless/openlane:$(OPENLANE_TAG) && \
 		export IMAGE_NAME=efabless/openlane:$(OPENLANE_TAG) && \
@@ -102,3 +80,16 @@ ifeq ($(OPENLANE_ROOT),)
 	@echo "Please export OPENLANE_ROOT"
 	@exit 1
 endif
+
+FORCE:
+
+clean:
+	@echo "Use clean_all to clean everything :)"
+
+clean_all: $(CLEAN)
+
+$(CLEAN): clean-% :
+	rm -rf runs/$*
+	rm -rf ../gds/$**
+	rm -rf ../mag/$**
+	rm -rf ../lef/$**

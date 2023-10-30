@@ -1,0 +1,3 @@
+core/pipeline/ycr_tracelog.sv
+tb/ycr_memory_tb_ahb.sv
+tb/ycr_top_tb_ahb.sv
