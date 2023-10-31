@@ -66,18 +66,6 @@ wire   [WB_WIDTH-1:0]          wbd_int_dat_o                          ; // data 
 wire                           wbd_int_ack_o                          ; // acknowlegement
 wire                           wbd_int_err_o                          ; // error
 
-//---------------------------------------------------------------------
-//    SPI Master Wishbone Interface
-//---------------------------------------------------------------------
-wire                           wbd_adc_stb_o                          ;
-wire [7:0]                     wbd_adc_adr_o                          ;
-wire                           wbd_adc_we_o                           ; // 1 - Write, 0 - Read
-wire [WB_WIDTH-1:0]            wbd_adc_dat_o                          ;
-wire [WB_WIDTH/8-1:0]          wbd_adc_sel_o                          ; // Byte enable
-wire                           wbd_adc_cyc_o                          ;
-wire  [2:0]                    wbd_adc_cti_o                          ;
-wire  [WB_WIDTH-1:0]           wbd_adc_dat_i                          ;
-wire                           wbd_adc_ack_i                          ;
 
 //---------------------------------------------------------------------
 //    Global Register Wishbone Interface
@@ -106,44 +94,22 @@ wire                           wbd_uart_ack_i                         ; // ackno
 wire                           wbd_uart_err_i                         ;  // error
 
 
-//----------------------------------------------------
-//  CPU Configuration
-//----------------------------------------------------
-wire                           cpu_intf_rst_n                         ;
-wire  [3:0]                    cpu_core_rst_n                         ;
-
-wire [1:0]                     uart_rst_n                             ; // uart reset
-
 wire                           usb_rst_n                              ; // i2c reset
-wire                           bist_rst_n                             ; // i2c reset
-wire                           cpu_clk                                ;
 
 wire                           usb_clk                                ;
 wire                           wbd_clk_int                            ;
 wire                           wbd_clk_wh                             ;
 
-wire                           wbd_clk_spi                            ;
 wire                           wbd_clk_pinmux                         ;
 wire                           wbd_int_rst_n                          ;
 wire                           wbd_pll_rst_n                          ;
 
 
-wire [7:0]                     cfg_glb_ctrl                           ;
 wire [31:0]                    cfg_clk_skew_ctrl1                     ;
 wire [31:0]                    cfg_clk_skew_ctrl2                     ;
 wire [3:0]                     cfg_wcska_wi                           ; // clock skew adjust for wishbone interconnect
 wire [3:0]                     cfg_wcska_wh                           ; // clock skew adjust for web host
 
-wire [3:0]                     cfg_wcska_uart                         ; // clock skew adjust for uart
-
-wire [3:0]                     cfg_wcska_pinmux                       ; // clock skew adjust for pinmux
-
-
-// Bus Repeater Signals  output from Wishbone Interface
-
-wire [3:0]                     cfg_wcska_uart_rp                       ; // clock skew adjust for uart
-
-wire [3:0]                     cfg_wcska_pinmux_rp                     ; // clock skew adjust for pinmux
 
 
 // Progammable Clock Skew inserted signals
@@ -154,7 +120,6 @@ wire                           wbd_clk_uart_skew                      ; // clock
 
 wire [31:0]                    spi_debug                              ;
 wire [31:0]                    pinmux_debug                           ;
-wire                           dbg_clk_mon                            ; // clock monitoring port
 wire [63:0]                    riscv_debug                            ;
 
 // USB I/F
@@ -163,7 +128,6 @@ wire                           usb_dn_o                               ;
 wire                           usb_oen                                ;
 wire                           usb_dp_i                               ;
 wire                           usb_dn_i                               ;
-
 
 wire                           usb_intr_o                             ;
 
@@ -183,7 +147,6 @@ wire [25:0]                    cfg_dc_trim                            ; // Exter
 wire                           pll_ref_clk                            ; // Input oscillator to match
 wire [1:0]                     pll_clk_out                            ; // Two 90 degree clock phases
 
-wire [3:0]                     spi_csn                                ;
 wire                           xtal_clk                               ;
 wire                           e_reset_n                              ;
 wire                           p_reset_n                              ;
@@ -200,10 +163,6 @@ wire                           s_reset_n_rp                           ;
 
 assign cfg_wcska_wi          = cfg_clk_skew_ctrl1[3:0];
 assign cfg_wcska_wh          = cfg_clk_skew_ctrl1[7:4];
-
-assign cfg_wcska_uart        = cfg_clk_skew_ctrl1[19:16];
-assign cfg_wcska_pinmux      = cfg_clk_skew_ctrl1[23:20];
-
 
 wire [127:0] la_data_out_int    = {pinmux_debug,spi_debug,riscv_debug};
 
@@ -238,8 +197,6 @@ wb_host u_wb_host(
           .user_clock1             (wb_clk_i_rp             ),
           .user_clock2             (user_clock2_rp          ),
           .int_pll_clock           (int_pll_clock           ),
-
-          .cpu_clk                 (cpu_clk                 ),
 
        // to/from Pinmux
           .xtal_clk                (xtal_clk                ),
@@ -329,30 +286,17 @@ wb_interconnect  #(
        .vssd1              (vssd1                        ),// User area 1 digital ground
 `endif
 
-
-	  .ch_clk_in              ({
-                                     cpu_clk,
-                                     cpu_clk,
-                                     cpu_clk }                  ),
-
 	  .ch_data_in             ({
 
                                   p_reset_n,
-                                  e_reset_n,
-
-
-
-		                          cfg_wcska_pinmux[3:0],
-			                      cfg_wcska_uart[3:0]
+                                  e_reset_n
+                              
 			             }                             ),
 	  .ch_data_out            ({
 
                                   p_reset_n_rp,
-                                  e_reset_n_rp,
-
-
-		                          cfg_wcska_pinmux_rp[3:0],
-			                      cfg_wcska_uart_rp[3:0]
+                                  e_reset_n_rp
+                              
                                } ),
      // Clock Skew adjust
           .wbd_clk_int        (wbd_clk_int                  ),// wb clock without skew 
@@ -403,7 +347,7 @@ wb_interconnect  #(
 	);
 
 //-----------------------------------------------
-// uart+i2c+usb+spi
+// usb
 //-----------------------------------------------
 
 uart_i2c_usb_spi_top   u_uart_i2c_usb_spi (
@@ -412,7 +356,7 @@ uart_i2c_usb_spi_top   u_uart_i2c_usb_spi (
           .vssd1              (vssd1                        ),// User area 1 digital ground
 `endif
           .wbd_clk_int        (uart_mclk                    ), 
-          .cfg_cska_uart      (cfg_wcska_uart_rp            ), 
+          
           .wbd_clk_uart       (wbd_clk_uart_skew            ),
 
           .usb_rstn           (usb_rst_n                    ), // USB reset
@@ -451,7 +395,6 @@ pinmux_top u_pinmux(
           .vssd1              (vssd1                        ),// User area 1 digital ground
 `endif
         //clk skew adjust
-          .cfg_cska_pinmux    (cfg_wcska_pinmux_rp          ),
           .wbd_clk_int        (pinmux_mclk                  ),
           .wbd_clk_pinmux     (wbd_clk_pinmux_skew          ),
 
@@ -469,11 +412,7 @@ pinmux_top u_pinmux(
 
           .usb_clk            (usb_clk                      ),
 	// Reset Control
-          .cpu_core_rst_n     (cpu_core_rst_n               ),
-          .cpu_intf_rst_n     (cpu_intf_rst_n               ),
-
-          .uart_rst_n         (uart_rst_n                   ),
-
+  
           .usb_rst_n          (usb_rst_n                    ),
 
 
@@ -505,10 +444,8 @@ pinmux_top u_pinmux(
           .usb_dp_i           (usb_dp_i                     ),
           .usb_dn_i           (usb_dn_i                     ),
 
-
      
           .pinmux_debug       (pinmux_debug                 ),
-     
      
           .cfg_pll_enb        (cfg_pll_enb                  ), 
           .cfg_pll_fed_div    (cfg_pll_fed_div              ), 
