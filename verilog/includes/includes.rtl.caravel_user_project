@@ -3,6 +3,7 @@
 +define+YCR_DBG_EN
 +incdir+$(USER_PROJECT_VERILOG)/rtl/
 +incdir+$(USER_PROJECT_VERILOG)/rtl/usb1_host/src/includes
+
 +incdir+$(USER_PROJECT_VERILOG)/dv/common/bfm
 +incdir+$(USER_PROJECT_VERILOG)/dv/common/model
 +incdir+$(USER_PROJECT_VERILOG)/dv/common/agents
@@ -15,6 +16,7 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 -v $(USER_PROJECT_VERILOG)/rtl/pinmux/src/glbl_rst_reg.sv
 -v $(USER_PROJECT_VERILOG)/rtl/pinmux/src/pseudorandom.sv
 
+
 -v $(USER_PROJECT_VERILOG)/rtl/gpio/src/gpio_top.sv
 -v $(USER_PROJECT_VERILOG)/rtl/gpio/src/gpio_dglicth.sv
 -v $(USER_PROJECT_VERILOG)/rtl/gpio/src/gpio_intr.sv
@@ -26,6 +28,7 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 -v $(USER_PROJECT_VERILOG)/rtl/pwm/src/pwm_core.sv
 -v $(USER_PROJECT_VERILOG)/rtl/pwm/src/pwm.sv
 
+
 -v $(USER_PROJECT_VERILOG)/rtl/timer/src/timer_top.sv
 -v $(USER_PROJECT_VERILOG)/rtl/timer/src/timer_reg.sv
 -v $(USER_PROJECT_VERILOG)/rtl/timer/src/timer.sv
@@ -36,6 +39,7 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 -v $(USER_PROJECT_VERILOG)/rtl/lib/pulse_gen_type2.sv
 -v $(USER_PROJECT_VERILOG)/rtl/lib/clk_div8.v
 
+
 -v $(USER_PROJECT_VERILOG)/rtl/uart/src/uart_rxfsm.sv
 -v $(USER_PROJECT_VERILOG)/rtl/uart/src/uart_txfsm.sv
 
@@ -43,6 +47,7 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 -v $(USER_PROJECT_VERILOG)/rtl/lib/reset_sync.sv  
 -v $(USER_PROJECT_VERILOG)/rtl/lib/double_sync_low.v  
 -v $(USER_PROJECT_VERILOG)/rtl/lib/clk_buf.v  
+
 
 -v $(USER_PROJECT_VERILOG)/rtl/usb1_host/src/core/usbh_core.sv
 -v $(USER_PROJECT_VERILOG)/rtl/usb1_host/src/core/usbh_crc16.sv
@@ -52,13 +57,16 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 -v $(USER_PROJECT_VERILOG)/rtl/usb1_host/src/phy/usb_fs_phy.v
 -v $(USER_PROJECT_VERILOG)/rtl/usb1_host/src/phy/usb_transceiver.v
 -v $(USER_PROJECT_VERILOG)/rtl/usb1_host/src/top/usb1_host.sv
--v $(USER_PROJECT_VERILOG)/rtl/uart_i2c_usb_spi/src/uart_i2c_usb_spi.sv
+
+-v $(USER_PROJECT_VERILOG)/rtl/usb_top/src/usb_top.sv
+
 
 -v $(USER_PROJECT_VERILOG)/rtl/lib/async_fifo.sv  
 -v $(USER_PROJECT_VERILOG)/rtl/lib/registers.v
 -v $(USER_PROJECT_VERILOG)/rtl/lib/clk_ctl.v
 -v $(USER_PROJECT_VERILOG)/rtl/lib/ser_inf_32b.sv
 -v $(USER_PROJECT_VERILOG)/rtl/lib/ser_shift.sv
+
 
 -v $(USER_PROJECT_VERILOG)/rtl/wb_host/src/wb_host.sv
 -v $(USER_PROJECT_VERILOG)/rtl/wb_host/src/wbh_reset_fsm.sv
@@ -67,6 +75,7 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 -v $(USER_PROJECT_VERILOG)/rtl/sspis/src/sspis_top.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sspis/src/sspis_if.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sspis/src/spi2wb.sv
+
 
 -v $(USER_PROJECT_VERILOG)/rtl/lib/async_wb.sv
 -v $(USER_PROJECT_VERILOG)/rtl/lib/sync_wbb.sv
@@ -80,10 +89,14 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 
 
 -v $(USER_PROJECT_VERILOG)/rtl/lib/sync_fifo.sv
+
+
 -v $(USER_PROJECT_VERILOG)/rtl/uart2wb/src/uart2wb.sv 
 -v $(USER_PROJECT_VERILOG)/rtl/uart2wb/src/uart2_core.sv 
 -v $(USER_PROJECT_VERILOG)/rtl/uart2wb/src/uart_msg_handler.v 
 -v $(USER_PROJECT_VERILOG)/rtl/uart2wb/src/uart_auto_det.sv
+
+
 
 -v $(USER_PROJECT_VERILOG)/rtl/lib/async_reg_bus.sv
 -v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v
@@ -93,13 +106,9 @@ $(USER_PROJECT_VERILOG)/rtl/user_reg_map.v
 
 -v $(USER_PROJECT_VERILOG)/rtl/dg_pll/src/dg_pll.v
 
+
 -v $(USER_PROJECT_VERILOG)/rtl/bus_rep/bus_rep_south.sv
 -v $(USER_PROJECT_VERILOG)/rtl/bus_rep/bus_rep_north.sv
 -v $(USER_PROJECT_VERILOG)/rtl/bus_rep/bus_rep_east.sv
 -v $(USER_PROJECT_VERILOG)/rtl/bus_rep/bus_rep_west.sv
-
-
-
-
-
 

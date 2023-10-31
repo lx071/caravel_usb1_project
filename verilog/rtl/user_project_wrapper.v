@@ -83,15 +83,15 @@ wire                           wbd_pinmux_err_i                       ; // error
 //---------------------------------------------------------------------
 //    Global Register Wishbone Interface
 //---------------------------------------------------------------------
-wire                           wbd_uart_stb_o                         ; // strobe/request
-wire   [8:0]                   wbd_uart_adr_o                         ; // address
-wire                           wbd_uart_we_o                          ; // write
-wire   [31:0]                  wbd_uart_dat_o                         ; // data output
-wire   [3:0]                   wbd_uart_sel_o                         ; // byte enable
-wire                           wbd_uart_cyc_o                         ;
-wire   [31:0]                  wbd_uart_dat_i                         ; // data input
-wire                           wbd_uart_ack_i                         ; // acknowlegement
-wire                           wbd_uart_err_i                         ;  // error
+wire                           wbd_usb_stb_o                         ; // strobe/request
+wire   [8:0]                   wbd_usb_adr_o                         ; // address
+wire                           wbd_usb_we_o                          ; // write
+wire   [31:0]                  wbd_usb_dat_o                         ; // data output
+wire   [3:0]                   wbd_usb_sel_o                         ; // byte enable
+wire                           wbd_usb_cyc_o                         ;
+wire   [31:0]                  wbd_usb_dat_i                         ; // data input
+wire                           wbd_usb_ack_i                         ; // acknowlegement
+wire                           wbd_usb_err_i                         ;  // error
 
 
 wire                           usb_rst_n                              ; // i2c reset
@@ -115,7 +115,7 @@ wire [3:0]                     cfg_wcska_wh                           ; // clock
 // Progammable Clock Skew inserted signals
 wire                           wbd_clk_wi_skew                        ; // clock for wishbone interconnect with clock skew
 
-wire                           wbd_clk_uart_skew                      ; // clock for uart with clock skew
+wire                           wbd_clk_usb_skew                      ; // clock for usb with clock skew
 
 
 wire [31:0]                    spi_debug                              ;
@@ -132,7 +132,7 @@ wire                           usb_dn_i                               ;
 wire                           usb_intr_o                             ;
 
 
-wire                           uart_mclk                              ;
+wire                           usb_mclk                              ;
 wire                           pinmux_mclk                            ;
 
 
@@ -321,15 +321,15 @@ wb_interconnect  #(
          
          // Slave 1 Interface
        // .s1_wbd_err_i       (1'b0                         ), - Moved inside IP
-          .s1_mclk            (uart_mclk                    ),
-          .s1_wbd_dat_i       (wbd_uart_dat_i               ),
-          .s1_wbd_ack_i       (wbd_uart_ack_i               ),
-          .s1_wbd_dat_o       (wbd_uart_dat_o               ),
-          .s1_wbd_adr_o       (wbd_uart_adr_o               ),
-          .s1_wbd_sel_o       (wbd_uart_sel_o               ),
-          .s1_wbd_we_o        (wbd_uart_we_o                ),  
-          .s1_wbd_cyc_o       (wbd_uart_cyc_o               ),
-          .s1_wbd_stb_o       (wbd_uart_stb_o               ),
+          .s1_mclk            (usb_mclk                    ),
+          .s1_wbd_dat_i       (wbd_usb_dat_i               ),
+          .s1_wbd_ack_i       (wbd_usb_ack_i               ),
+          .s1_wbd_dat_o       (wbd_usb_dat_o               ),
+          .s1_wbd_adr_o       (wbd_usb_adr_o               ),
+          .s1_wbd_sel_o       (wbd_usb_sel_o               ),
+          .s1_wbd_we_o        (wbd_usb_we_o                ),  
+          .s1_wbd_cyc_o       (wbd_usb_cyc_o               ),
+          .s1_wbd_stb_o       (wbd_usb_stb_o               ),
          
          // Slave 2 Interface
        // .s2_wbd_err_i       (1'b0                         ), - Moved inside IP
@@ -350,29 +350,29 @@ wb_interconnect  #(
 // usb
 //-----------------------------------------------
 
-uart_i2c_usb_spi_top   u_uart_i2c_usb_spi (
+usb_top   usb_top (
 `ifdef USE_POWER_PINS
           .vccd1              (vccd1                        ),// User area 1 1.8V supply
           .vssd1              (vssd1                        ),// User area 1 digital ground
 `endif
-          .wbd_clk_int        (uart_mclk                    ), 
+          .wbd_clk_int        (usb_mclk                    ), 
           
-          .wbd_clk_uart       (wbd_clk_uart_skew            ),
+          .wbd_clk_usb       (wbd_clk_usb_skew            ),
 
           .usb_rstn           (usb_rst_n                    ), // USB reset
-          .app_clk            (wbd_clk_uart_skew            ),
+          .app_clk            (wbd_clk_usb_skew            ),
           .usb_clk            (usb_clk                      ),
 
         // Reg Bus Interface Signal
-          .reg_cs             (wbd_uart_stb_o               ),
-          .reg_wr             (wbd_uart_we_o                ),
-          .reg_addr           (wbd_uart_adr_o[8:0]          ),
-          .reg_wdata          (wbd_uart_dat_o               ),
-          .reg_be             (wbd_uart_sel_o               ),
+          .reg_cs             (wbd_usb_stb_o               ),
+          .reg_wr             (wbd_usb_we_o                ),
+          .reg_addr           (wbd_usb_adr_o[8:0]          ),
+          .reg_wdata          (wbd_usb_dat_o               ),
+          .reg_be             (wbd_usb_sel_o               ),
 
        // Outputs
-          .reg_rdata          (wbd_uart_dat_i               ),
-          .reg_ack            (wbd_uart_ack_i               ),
+          .reg_rdata          (wbd_usb_dat_i               ),
+          .reg_ack            (wbd_usb_ack_i               ),
 
           .usb_in_dp          (usb_dp_i                     ),
           .usb_in_dn          (usb_dn_i                     ),
