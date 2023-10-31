@@ -58,6 +58,8 @@ set ::env(VERILOG_FILES) "\
         $::env(DESIGN_DIR)/../../verilog/rtl/wb_interconnect/src/wb_interconnect.sv  \
 	"
 
+set ::env(ROUTING_CORES) 1
+
 set ::env(SYNTH_DEFINES) [list SYNTHESIS ]
 
 set ::env(SYNTH_PARAMETERS) "CH_CLK_WD=3\

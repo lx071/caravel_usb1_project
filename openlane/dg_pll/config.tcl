@@ -22,6 +22,9 @@ set ::env(VERILOG_FILES) "$::env(DESIGN_DIR)/../../verilog/rtl/dg_pll/src/dg_pll
                           $::env(DESIGN_DIR)/../../verilog/rtl/dg_pll/src/digital_pll_controller.v \
                           $::env(DESIGN_DIR)/../../verilog/rtl/dg_pll/src/ring_osc2x13.v"
 
+
+set ::env(ROUTING_CORES) 1		  
+		  
 set ::env(CLOCK_PORT) ""
 set ::env(CLOCK_TREE_SYNTH) 0
 

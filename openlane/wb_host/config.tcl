@@ -68,6 +68,8 @@ set ::env(VERILOG_FILES) "\
      $::env(DESIGN_DIR)/../../verilog/rtl/sspis/src/sspis_if.sv \
      $::env(DESIGN_DIR)/../../verilog/rtl/sspis/src/spi2wb.sv \
      "
+set ::env(ROUTING_CORES) 1
+
 set ::env(VERILOG_INCLUDE_DIRS) [glob $::env(DESIGN_DIR)/../../verilog/rtl/ ]
 
 set ::env(SYNTH_READ_BLACKBOX_LIB) 1

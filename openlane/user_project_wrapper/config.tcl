@@ -42,9 +42,9 @@ set ::env(DESIGN_IS_CORE) 1
 
 ## Source Verilog Files
 set ::env(VERILOG_FILES) "\
-	$::env(DESIGN_DIR)/../../verilog/rtl//yifive/ycr1c/src/top/ycr_top_wb.sv \
 	$::env(DESIGN_DIR)/../../verilog/rtl/user_project_wrapper.v"
 
+set ::env(ROUTING_CORES) 1
 
 ## Clock configurations
 set ::env(CLOCK_PORT) "user_clock2 wb_clk_i"
@@ -65,40 +65,30 @@ set ::env(SYNTH_READ_BLACKBOX_LIB) 1
 
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
-        $::env(DESIGN_DIR)/../../verilog/gl/qspim_top.v \
+
         $::env(DESIGN_DIR)/../../verilog/gl/wb_interconnect.v \
         $::env(DESIGN_DIR)/../../verilog/gl/pinmux_top.v     \
-        $::env(DESIGN_DIR)/../../verilog/gl/uart_i2c_usb_spi_top.v     \
+        $::env(DESIGN_DIR)/../../verilog/gl/usb_top.v     \
 	    $::env(DESIGN_DIR)/../../verilog/gl/wb_host.v \
-	    $::env(DESIGN_DIR)/../../verilog/gl/ycr_intf.v \
-	    $::env(DESIGN_DIR)/../../verilog/gl/ycr_core_top.v \
-	    $::env(DESIGN_DIR)/../../verilog/gl/ycr_iconnect.v \
+
 	    $::env(DESIGN_DIR)/../../verilog/gl/dg_pll.v \
 	    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v \
-	    $::env(DESIGN_DIR)/../../verilog/gl/dac_top.v \
-	    $::env(DESIGN_DIR)/../../verilog/gl/aes_top.v \
-	    $::env(DESIGN_DIR)/../../verilog/gl/fpu_wrapper.v \
+
 	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_south.v \
 	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_north.v \
 	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_east.v \
 	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_west.v \
-	    $::env(DESIGN_DIR)/../../verilog/gl/peri_top.v \
 	    "
 
 set ::env(EXTRA_LEFS) "\
-	$lef_root/qspim_top.lef \
 	$lef_root/pinmux_top.lef \
 	$lef_root/wb_interconnect.lef \
-	$lef_root/uart_i2c_usb_spi_top.lef \
+	$lef_root/usb_top.lef \
 	$lef_root/wb_host.lef \
-	$lef_root/ycr_intf.lef \
-	$lef_root/ycr_core_top.lef \
-	$lef_root/ycr_iconnect.lef \
+
 	$lef_root/dg_pll.lef \
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/lef/sky130_sram_2kbyte_1rw1r_32x512_8.lef \
-	$lef_root/dac_top.lef \
-	$lef_root/aes_top.lef \
-	$lef_root/fpu_wrapper.lef \
+	
 	$lef_root/bus_rep_south.lef \
 	$lef_root/bus_rep_north.lef \
 	$lef_root/bus_rep_east.lef \
@@ -107,29 +97,24 @@ set ::env(EXTRA_LEFS) "\
 	"
 
 set ::env(EXTRA_GDS_FILES) "\
-	$gds_root/qspim_top.gds \
+
 	$gds_root/pinmux_top.gds \
 	$gds_root/wb_interconnect.gds \
-	$gds_root/uart_i2c_usb_spi_top.gds \
+	$gds_root/usb_top.gds \
 	$gds_root/wb_host.gds \
-	$gds_root/ycr_intf.gds \
-	$gds_root/ycr_core_top.gds \
-	$gds_root/ycr_iconnect.gds \
+	
 	$gds_root/dg_pll.gds \
-	$gds_root/dac_top.gds \
+
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/gds/sky130_sram_2kbyte_1rw1r_32x512_8.gds \
-	$gds_root/aes_top.gds \
-	$gds_root/fpu_wrapper.gds \
+	
 	$gds_root/bus_rep_south.gds \
 	$gds_root/bus_rep_north.gds \
 	$gds_root/bus_rep_east.gds \
 	$gds_root/bus_rep_west.gds \
-	$gds_root/peri_top.gds \
+
 	"
 
 set ::env(SYNTH_DEFINES) [list SYNTHESIS YCR_DBG_EN ]
-
-set ::env(VERILOG_INCLUDE_DIRS) [glob $::env(DESIGN_DIR)/../../verilog/rtl/yifive/ycr1c/src/includes ]
 
 #set ::env(GLB_RT_MAXLAYER) 6
 set ::env(RT_MAX_LAYER) {met5}
@@ -235,4 +220,5 @@ set ::env(QUIT_ON_TIMING_VIOLATIONS) "0"
 
 ## Temp Masked due to long Run Time
 set ::env(RUN_KLAYOUT_XOR) {0}
+
 
