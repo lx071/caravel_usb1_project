@@ -44,8 +44,7 @@ set ::env(CLOCK_BUFFER_FANOUT) "8"
 # Local sources + no2usb sources
 set ::env(VERILOG_FILES) "\
     $::env(DESIGN_DIR)/../../verilog/rtl/lib/clk_skew_adjust.gv \
-    $::env(DESIGN_DIR)/../../verilog/rtl/uart/src/uart_core.sv  \
-    $::env(DESIGN_DIR)/../../verilog/rtl/uart/src/uart_cfg.sv   \
+
     $::env(DESIGN_DIR)/../../verilog/rtl/uart/src/uart_rxfsm.sv \
     $::env(DESIGN_DIR)/../../verilog/rtl/uart/src/uart_txfsm.sv \
     $::env(DESIGN_DIR)/../../verilog/rtl/lib/async_wb.sv   \
@@ -55,9 +54,7 @@ set ::env(VERILOG_FILES) "\
     $::env(DESIGN_DIR)/../../verilog/rtl/lib/double_sync_low.v  \
     $::env(DESIGN_DIR)/../../verilog/rtl/lib/clk_ctl.v          \
     $::env(DESIGN_DIR)/../../verilog/rtl/lib/registers.v        \
-    $::env(DESIGN_DIR)/../../verilog/rtl/i2cm/src/core/i2cm_bit_ctrl.v      \
-    $::env(DESIGN_DIR)/../../verilog/rtl/i2cm/src/core/i2cm_byte_ctrl.v     \
-    $::env(DESIGN_DIR)/../../verilog/rtl/i2cm/src/core/i2cm_top.v           \
+  
     $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/core/usbh_core.sv    \
     $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/core/usbh_crc16.sv   \
     $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/core/usbh_crc5.sv    \
@@ -66,18 +63,14 @@ set ::env(VERILOG_FILES) "\
     $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/phy/usb_fs_phy.v     \
     $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/phy/usb_transceiver.v\
     $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/top/usb1_host.sv     \
-    $::env(DESIGN_DIR)/../../verilog/rtl/sspim/src/sspim_top.sv             \
-    $::env(DESIGN_DIR)/../../verilog/rtl/sspim/src/sspim_ctl.sv             \
-    $::env(DESIGN_DIR)/../../verilog/rtl/sspim/src/sspim_if.sv              \
-    $::env(DESIGN_DIR)/../../verilog/rtl/sspim/src/sspim_cfg.sv             \
-    $::env(DESIGN_DIR)/../../verilog/rtl/sspim/src/sspim_clkgen.sv             \
+   
     $::env(DESIGN_DIR)/../../verilog/rtl/uart_i2c_usb_spi/src/uart_i2c_usb_spi.sv\
     $::env(DESIGN_DIR)/../../verilog/rtl/lib/ctech_cells.sv     \
     "
 
 set ::env(SYNTH_NO_FLAT) {1}
 set ::env(SYNTH_READ_BLACKBOX_LIB) 1
-set ::env(VERILOG_INCLUDE_DIRS) [glob $::env(DESIGN_DIR)/../../verilog/rtl/i2cm/src/includes $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/includes ]
+set ::env(VERILOG_INCLUDE_DIRS) [glob $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/includes ]
 set ::env(SYNTH_DEFINES) [list SYNTHESIS ]
 
 set ::env(SDC_FILE) $::env(DESIGN_DIR)/base.sdc
@@ -149,3 +142,4 @@ set ::env(QUIT_ON_TIMING_VIOLATIONS) "0"
 set ::env(QUIT_ON_MAGIC_DRC) "1"
 set ::env(QUIT_ON_LVS_ERROR) "1"
 set ::env(QUIT_ON_SLEW_VIOLATIONS) "0"
+
