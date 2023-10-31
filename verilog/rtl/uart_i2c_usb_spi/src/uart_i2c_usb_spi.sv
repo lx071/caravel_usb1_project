@@ -76,10 +76,7 @@ module uart_i2c_usb_spi_top
    input logic	       wbd_clk_int,
    output logic	       wbd_clk_uart,
 
-   input logic  [1:0]  uart_rstn  , // async reset
-   input logic         i2c_rstn    ,  // async reset
    input logic         usb_rstn    ,  // async reset
-   input logic         spi_rstn    ,  // async reset
    input logic         app_clk     ,
    input logic         usb_clk     ,   // 48Mhz usb clock
 
@@ -93,22 +90,7 @@ module uart_i2c_usb_spi_top
         // Outputs
    output logic [31:0] reg_rdata,
    output logic        reg_ack,
-   /////////////////////////////////////////////////////////
-   // i2c interface
-   ///////////////////////////////////////////////////////
-   input logic         scl_pad_i              , // SCL-line input
-   output logic        scl_pad_o              , // SCL-line output (always 1'b0)
-   output logic        scl_pad_oen_o          , // SCL-line output enable (active low)
-   
-   input logic         sda_pad_i              , // SDA-line input
-   output logic        sda_pad_o              , // SDA-line output (always 1'b0)
-   output logic        sda_padoen_o           , // SDA-line output enable (active low)
 
-   output logic        i2cm_intr_o            ,
-
-   // UART I/F
-   input  logic  [1:0] uart_rxd               , 
-   output logic  [1:0] uart_txd               ,
 
    // USB 1.1 HOST I/F
    input  logic        usb_in_dp              ,
@@ -118,13 +100,7 @@ module uart_i2c_usb_spi_top
    output logic        usb_out_dn             ,
    output logic        usb_out_tx_oen         ,
    
-   output logic        usb_intr_o            ,
-
-   // SPIM I/F
-   output logic        sspim_sck, // clock out
-   output logic        sspim_so,  // serial data out
-   input  logic        sspim_si,  // serial data in
-   output logic [3:0]  sspim_ssn  // cs_n
+   output logic        usb_intr_o            
 
      );
 
@@ -140,112 +116,21 @@ clk_skew_adjust u_skew_uart
 	       .clk_out    (wbd_clk_uart                ) 
        );
 
-`define SEL_UART0 3'b000
-`define SEL_I2C   3'b001
 `define SEL_USB   3'b010
-`define SEL_SPI   3'b011
-`define SEL_UART1 3'b100
-
-
 
 //----------------------------------------
 //  Register Response Path Mux
 //  --------------------------------------
-logic [7:0]   reg_uart0_rdata;
-logic [7:0]   reg_uart1_rdata;
-logic [7:0]   reg_i2c_rdata;
+
 logic [31:0]  reg_usb_rdata;
-logic [31:0]  reg_spim_rdata;
-logic         reg_uart0_ack;
-logic         reg_uart1_ack;
-logic         reg_i2c_ack;
 logic         reg_usb_ack;
-logic         reg_spim_ack;
 
 
-assign reg_rdata = (reg_addr[8:6] == `SEL_UART0) ? {24'h0,reg_uart0_rdata} : 
-	           (reg_addr[8:6] == `SEL_UART1) ? {24'h0,reg_uart1_rdata} :
-	           (reg_addr[8:6] == `SEL_I2C) ? {24'h0,reg_i2c_rdata} :
-	           (reg_addr[8:6] == `SEL_USB) ? reg_usb_rdata : reg_spim_rdata;
-assign reg_ack   = (reg_addr[8:6] == `SEL_UART0) ? reg_uart0_ack   : 
-	           (reg_addr[8:6] == `SEL_UART1) ? reg_uart1_ack   : 
-	           (reg_addr[8:6] == `SEL_I2C)   ? reg_i2c_ack     : 
-	           (reg_addr[8:6] == `SEL_USB)   ? reg_usb_ack     : reg_spim_ack;
+assign reg_rdata = reg_usb_rdata;
+assign reg_ack   = reg_usb_ack;
 
-wire reg_uart0_cs  = (reg_addr[8:6] == `SEL_UART0) ? reg_cs : 1'b0;
-wire reg_uart1_cs  = (reg_addr[8:6] == `SEL_UART1) ? reg_cs : 1'b0;
-wire reg_i2cm_cs   = (reg_addr[8:6] == `SEL_I2C)   ? reg_cs : 1'b0;
+
 wire reg_usb_cs    = (reg_addr[8:6] == `SEL_USB)   ? reg_cs : 1'b0;
-wire reg_spim_cs   = (reg_addr[8:6] == `SEL_SPI)   ? reg_cs : 1'b0;
-
-uart_core  u_uart0_core (  
-
-        .arst_n      (uart_rstn[0]     ), // async reset
-        .app_clk     (app_clk          ),
-
-        // Reg Bus Interface Signal
-        .reg_cs      (reg_uart0_cs     ),
-        .reg_wr      (reg_wr           ),
-        .reg_addr    (reg_addr[5:2]    ),
-        .reg_wdata   (reg_wdata[7:0]   ),
-        .reg_be      (reg_be[0]        ),
-
-        // Outputs
-        .reg_rdata   (reg_uart0_rdata[7:0]),
-        .reg_ack     (reg_uart0_ack    ),
-
-            // Pad Control
-        .rxd          (uart_rxd[0]     ),
-        .txd          (uart_txd[0]     )
-     );
-
-uart_core  u_uart1_core (  
-
-        .arst_n      (uart_rstn[1]     ), // async reset
-        .app_clk     (app_clk          ),
-
-        // Reg Bus Interface Signal
-        .reg_cs      (reg_uart1_cs     ),
-        .reg_wr      (reg_wr           ),
-        .reg_addr    (reg_addr[5:2]    ),
-        .reg_wdata   (reg_wdata[7:0]   ),
-        .reg_be      (reg_be[0]        ),
-
-        // Outputs
-        .reg_rdata   (reg_uart1_rdata[7:0]),
-        .reg_ack     (reg_uart1_ack    ),
-
-            // Pad Control
-        .rxd          (uart_rxd[1]     ),
-        .txd          (uart_txd[1]     )
-     );
-
-i2cm_top  u_i2cm (
-	// wishbone signals
-	.wb_clk_i      (app_clk        ), // master clock input
-	.sresetn       (1'b1           ), // synchronous reset
-	.aresetn       (i2c_rstn       ), // asynchronous reset
-	.wb_adr_i      (reg_addr[4:2]  ), // lower address bits
-	.wb_dat_i      (reg_wdata[7:0] ), // databus input
-	.wb_dat_o      (reg_i2c_rdata  ), // databus output
-	.wb_we_i       (reg_wr         ), // write enable input
-	.wb_stb_i      (reg_i2cm_cs    ), // stobe/core select signal
-	.wb_cyc_i      (reg_i2cm_cs    ), // valid bus cycle input
-	.wb_ack_o      (reg_i2c_ack    ), // bus cycle acknowledge output
-	.wb_inta_o     (i2cm_intr_o    ), // interrupt request signal output
-
-	// I2C signals
-	// i2c clock line
-	.scl_pad_i     (scl_pad_i      ), // SCL-line input
-	.scl_pad_o     (scl_pad_o      ), // SCL-line output (always 1'b0)
-	.scl_padoen_o  (scl_pad_oen_o  ), // SCL-line output enable (active low)
-
-	// i2c data line
-	.sda_pad_i     (sda_pad_i      ), // SDA-line input
-	.sda_pad_o     (sda_pad_o      ), // SDA-line output (always 1'b0)
-	.sda_padoen_o  (sda_padoen_o   )  // SDA-line output enable (active low)
-
-         );
 
 
 usb1_host u_usb_host (
@@ -277,33 +162,6 @@ usb1_host u_usb_host (
 
     );
 
-sspim_top u_sspim (
-     .clk          (app_clk         ),
-     .reset_n      (spi_rstn        ),          
-           
-           
-     //---------------------------------
-     // Reg Bus Interface Signal
-     //---------------------------------
-     .reg_cs      (reg_spim_cs      ),
-     .reg_wr      (reg_wr           ),
-     .reg_addr    ({2'b0,reg_addr[5:0]} ),
-     .reg_wdata   (reg_wdata        ),
-     .reg_be      (reg_be           ),
-
-     // Outputs
-     .reg_rdata   (reg_spim_rdata   ),
-     .reg_ack     (reg_spim_ack     ),
-           
-      //-------------------------------------------
-      // Line Interface
-      //-------------------------------------------
-           
-      .sck           (sspim_sck), // clock out
-      .so            (sspim_so),  // serial data out
-      .si            (sspim_si),  // serial data in
-      .ssn           (sspim_ssn)  // cs_n
-
-           );
 
 endmodule
+

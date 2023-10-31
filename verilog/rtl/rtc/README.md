@@ -1,2 +1,0 @@
-# rtc
-Real Time Core
