@@ -350,7 +350,7 @@ wb_interconnect  #(
 // usb
 //-----------------------------------------------
 
-usb_top   usb_top (
+usb_top   u_usb_top (
 `ifdef USE_POWER_PINS
           .vccd1              (vccd1                        ),// User area 1 1.8V supply
           .vssd1              (vssd1                        ),// User area 1 digital ground

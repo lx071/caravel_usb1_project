@@ -1,0 +1,1283 @@
+(DELAYFILE
+ (SDFVERSION "3.0")
+ (DESIGN "bus_rep_east")
+ (DATE "Wed Nov  1 01:55:15 2023")
+ (VENDOR "Parallax")
+ (PROGRAM "STA")
+ (VERSION "2.3.3")
+ (DIVIDER .)
+ (VOLTAGE 1.800::1.800)
+ (PROCESS "1.000::1.000")
+ (TEMPERATURE 25.000::25.000)
+ (TIMESCALE 1ns)
+ (CELL
+  (CELLTYPE "bus_rep_east")
+  (INSTANCE)
+  (DELAY
+   (ABSOLUTE
+    (INTERCONNECT ch_in[0] wire66.A (0.088:0.088:0.088) (0.043:0.043:0.043))
+    (INTERCONNECT ch_in[0] ANTENNA_wire66_A.DIODE (0.088:0.088:0.088) (0.043:0.043:0.043))
+    (INTERCONNECT ch_in[10] u_rp\[10\]\.u_buf.A (0.270:0.270:0.270) (0.139:0.139:0.139))
+    (INTERCONNECT ch_in[10] ANTENNA_u_rp\[10\]\.u_buf_A.DIODE (0.270:0.270:0.270) (0.138:0.138:0.138))
+    (INTERCONNECT ch_in[11] u_rp\[11\]\.u_buf.A (0.030:0.030:0.030) (0.014:0.014:0.014))
+    (INTERCONNECT ch_in[11] ANTENNA_u_rp\[11\]\.u_buf_A.DIODE (0.030:0.030:0.030) (0.014:0.014:0.014))
+    (INTERCONNECT ch_in[12] u_rp\[12\]\.u_buf.A (0.126:0.126:0.126) (0.063:0.063:0.063))
+    (INTERCONNECT ch_in[12] ANTENNA_u_rp\[12\]\.u_buf_A.DIODE (0.126:0.126:0.126) (0.063:0.063:0.063))
+    (INTERCONNECT ch_in[13] u_rp\[13\]\.u_buf.A (0.103:0.103:0.103) (0.051:0.051:0.051))
+    (INTERCONNECT ch_in[13] ANTENNA_u_rp\[13\]\.u_buf_A.DIODE (0.103:0.103:0.103) (0.051:0.051:0.051))
+    (INTERCONNECT ch_in[14] u_rp\[14\]\.u_buf.A (0.031:0.031:0.031) (0.015:0.015:0.015))
+    (INTERCONNECT ch_in[14] ANTENNA_u_rp\[14\]\.u_buf_A.DIODE (0.031:0.031:0.031) (0.015:0.015:0.015))
+    (INTERCONNECT ch_in[15] u_rp\[15\]\.u_buf.A (0.015:0.015:0.015) (0.006:0.006:0.006))
+    (INTERCONNECT ch_in[15] ANTENNA_u_rp\[15\]\.u_buf_A.DIODE (0.015:0.015:0.015) (0.006:0.006:0.006))
+    (INTERCONNECT ch_in[16] u_rp\[16\]\.u_buf.A (0.062:0.062:0.062) (0.030:0.030:0.030))
+    (INTERCONNECT ch_in[16] ANTENNA_u_rp\[16\]\.u_buf_A.DIODE (0.062:0.062:0.062) (0.030:0.030:0.030))
+    (INTERCONNECT ch_in[17] u_rp\[17\]\.u_buf.A (0.032:0.032:0.032) (0.015:0.015:0.015))
+    (INTERCONNECT ch_in[17] ANTENNA_u_rp\[17\]\.u_buf_A.DIODE (0.032:0.032:0.032) (0.015:0.015:0.015))
+    (INTERCONNECT ch_in[18] u_rp\[18\]\.u_buf.A (0.159:0.159:0.159) (0.080:0.080:0.080))
+    (INTERCONNECT ch_in[18] ANTENNA_u_rp\[18\]\.u_buf_A.DIODE (0.159:0.159:0.159) (0.080:0.080:0.080))
+    (INTERCONNECT ch_in[19] u_rp\[19\]\.u_buf.A (0.207:0.207:0.207) (0.106:0.106:0.106))
+    (INTERCONNECT ch_in[19] ANTENNA_u_rp\[19\]\.u_buf_A.DIODE (0.207:0.207:0.207) (0.106:0.106:0.106))
+    (INTERCONNECT ch_in[1] wire64.A (0.062:0.062:0.062) (0.030:0.030:0.030))
+    (INTERCONNECT ch_in[1] ANTENNA_wire64_A.DIODE (0.062:0.062:0.062) (0.030:0.030:0.030))
+    (INTERCONNECT ch_in[20] u_rp\[20\]\.u_buf.A (0.034:0.034:0.034) (0.016:0.016:0.016))
+    (INTERCONNECT ch_in[20] ANTENNA_u_rp\[20\]\.u_buf_A.DIODE (0.034:0.034:0.034) (0.016:0.016:0.016))
+    (INTERCONNECT ch_in[21] u_rp\[21\]\.u_buf.A (0.278:0.278:0.278) (0.144:0.144:0.144))
+    (INTERCONNECT ch_in[21] ANTENNA_u_rp\[21\]\.u_buf_A.DIODE (0.278:0.278:0.278) (0.144:0.144:0.144))
+    (INTERCONNECT ch_in[22] wire62.A (0.054:0.054:0.054) (0.026:0.026:0.026))
+    (INTERCONNECT ch_in[22] ANTENNA_wire62_A.DIODE (0.054:0.054:0.054) (0.026:0.026:0.026))
+    (INTERCONNECT ch_in[23] u_rp\[23\]\.u_buf.A (0.035:0.035:0.035) (0.016:0.016:0.016))
+    (INTERCONNECT ch_in[23] ANTENNA_u_rp\[23\]\.u_buf_A.DIODE (0.035:0.035:0.035) (0.016:0.016:0.016))
+    (INTERCONNECT ch_in[24] wire61.A (0.139:0.139:0.139) (0.070:0.070:0.070))
+    (INTERCONNECT ch_in[24] ANTENNA_wire61_A.DIODE (0.139:0.139:0.139) (0.070:0.070:0.070))
+    (INTERCONNECT ch_in[25] wire60.A (0.168:0.168:0.168) (0.085:0.085:0.085))
+    (INTERCONNECT ch_in[25] ANTENNA_wire60_A.DIODE (0.168:0.168:0.168) (0.085:0.085:0.085))
+    (INTERCONNECT ch_in[26] u_rp\[26\]\.u_buf.A (0.034:0.034:0.034) (0.016:0.016:0.016))
+    (INTERCONNECT ch_in[26] ANTENNA_u_rp\[26\]\.u_buf_A.DIODE (0.034:0.034:0.034) (0.016:0.016:0.016))
+    (INTERCONNECT ch_in[27] wire59.A (0.268:0.268:0.268) (0.139:0.139:0.139))
+    (INTERCONNECT ch_in[27] ANTENNA_wire59_A.DIODE (0.268:0.268:0.268) (0.139:0.139:0.139))
+    (INTERCONNECT ch_in[28] wire58.A (0.037:0.037:0.037) (0.017:0.017:0.017))
+    (INTERCONNECT ch_in[28] ANTENNA_wire58_A.DIODE (0.037:0.037:0.037) (0.017:0.017:0.017))
+    (INTERCONNECT ch_in[29] u_rp\[29\]\.u_buf.A (0.037:0.037:0.037) (0.017:0.017:0.017))
+    (INTERCONNECT ch_in[29] ANTENNA_u_rp\[29\]\.u_buf_A.DIODE (0.037:0.037:0.037) (0.017:0.017:0.017))
+    (INTERCONNECT ch_in[2] u_rp\[2\]\.u_buf.A (0.029:0.029:0.029) (0.013:0.013:0.013))
+    (INTERCONNECT ch_in[2] ANTENNA_u_rp\[2\]\.u_buf_A.DIODE (0.029:0.029:0.029) (0.013:0.013:0.013))
+    (INTERCONNECT ch_in[30] wire56.A (0.129:0.129:0.129) (0.064:0.064:0.064))
+    (INTERCONNECT ch_in[30] ANTENNA_wire56_A.DIODE (0.129:0.129:0.129) (0.064:0.064:0.064))
+    (INTERCONNECT ch_in[31] wire54.A (0.185:0.185:0.185) (0.094:0.094:0.094))
+    (INTERCONNECT ch_in[31] ANTENNA_wire54_A.DIODE (0.185:0.185:0.185) (0.094:0.094:0.094))
+    (INTERCONNECT ch_in[32] u_rp\[32\]\.u_buf.A (0.038:0.038:0.038) (0.018:0.018:0.018))
+    (INTERCONNECT ch_in[32] ANTENNA_u_rp\[32\]\.u_buf_A.DIODE (0.038:0.038:0.038) (0.018:0.018:0.018))
+    (INTERCONNECT ch_in[33] wire52.A (0.261:0.261:0.261) (0.134:0.134:0.134))
+    (INTERCONNECT ch_in[33] ANTENNA_wire52_A.DIODE (0.261:0.261:0.261) (0.134:0.134:0.134))
+    (INTERCONNECT ch_in[34] wire50.A (0.351:0.351:0.351) (0.184:0.184:0.184))
+    (INTERCONNECT ch_in[34] ANTENNA_wire50_A.DIODE (0.351:0.351:0.351) (0.184:0.184:0.184))
+    (INTERCONNECT ch_in[35] u_rp\[35\]\.u_buf.A (0.041:0.041:0.041) (0.019:0.019:0.019))
+    (INTERCONNECT ch_in[35] ANTENNA_u_rp\[35\]\.u_buf_A.DIODE (0.041:0.041:0.041) (0.019:0.019:0.019))
+    (INTERCONNECT ch_in[36] wire48.A (0.127:0.127:0.127) (0.064:0.064:0.064))
+    (INTERCONNECT ch_in[36] ANTENNA_wire48_A.DIODE (0.127:0.127:0.127) (0.064:0.064:0.064))
+    (INTERCONNECT ch_in[37] wire45.A (0.154:0.154:0.154) (0.078:0.078:0.078))
+    (INTERCONNECT ch_in[37] ANTENNA_wire45_A.DIODE (0.154:0.154:0.154) (0.078:0.078:0.078))
+    (INTERCONNECT ch_in[38] u_rp\[38\]\.u_buf.A (0.038:0.038:0.038) (0.018:0.018:0.018))
+    (INTERCONNECT ch_in[38] ANTENNA_u_rp\[38\]\.u_buf_A.DIODE (0.038:0.038:0.038) (0.018:0.018:0.018))
+    (INTERCONNECT ch_in[39] wire42.A (0.253:0.253:0.253) (0.129:0.129:0.129))
+    (INTERCONNECT ch_in[39] ANTENNA_wire42_A.DIODE (0.253:0.253:0.253) (0.129:0.129:0.129))
+    (INTERCONNECT ch_in[3] wire39.A (0.305:0.305:0.305) (0.157:0.157:0.157))
+    (INTERCONNECT ch_in[3] ANTENNA_wire39_A.DIODE (0.305:0.305:0.305) (0.157:0.157:0.157))
+    (INTERCONNECT ch_in[40] wire38.A (0.218:0.218:0.218) (0.112:0.112:0.112))
+    (INTERCONNECT ch_in[40] ANTENNA_wire38_A.DIODE (0.218:0.218:0.218) (0.112:0.112:0.112))
+    (INTERCONNECT ch_in[41] u_rp\[41\]\.u_buf.A (0.043:0.043:0.043) (0.020:0.020:0.020))
+    (INTERCONNECT ch_in[41] ANTENNA_u_rp\[41\]\.u_buf_A.DIODE (0.043:0.043:0.043) (0.020:0.020:0.020))
+    (INTERCONNECT ch_in[42] wire35.A (0.091:0.091:0.091) (0.045:0.045:0.045))
+    (INTERCONNECT ch_in[42] ANTENNA_wire35_A.DIODE (0.091:0.091:0.091) (0.045:0.045:0.045))
+    (INTERCONNECT ch_in[43] wire31.A (0.146:0.146:0.146) (0.073:0.073:0.073))
+    (INTERCONNECT ch_in[43] ANTENNA_wire31_A.DIODE (0.146:0.146:0.146) (0.073:0.073:0.073))
+    (INTERCONNECT ch_in[44] u_rp\[44\]\.u_buf.A (0.040:0.040:0.040) (0.019:0.019:0.019))
+    (INTERCONNECT ch_in[44] ANTENNA_u_rp\[44\]\.u_buf_A.DIODE (0.040:0.040:0.040) (0.019:0.019:0.019))
+    (INTERCONNECT ch_in[4] wire27.A (0.250:0.250:0.250) (0.128:0.128:0.128))
+    (INTERCONNECT ch_in[4] ANTENNA_wire27_A.DIODE (0.250:0.250:0.250) (0.127:0.127:0.127))
+    (INTERCONNECT ch_in[5] u_rp\[5\]\.u_buf.A (0.029:0.029:0.029) (0.013:0.013:0.013))
+    (INTERCONNECT ch_in[5] ANTENNA_u_rp\[5\]\.u_buf_A.DIODE (0.029:0.029:0.029) (0.013:0.013:0.013))
+    (INTERCONNECT ch_in[6] wire26.A (0.122:0.122:0.122) (0.061:0.061:0.061))
+    (INTERCONNECT ch_in[6] ANTENNA_wire26_A.DIODE (0.122:0.122:0.122) (0.061:0.061:0.061))
+    (INTERCONNECT ch_in[7] wire25.A (0.105:0.105:0.105) (0.052:0.052:0.052))
+    (INTERCONNECT ch_in[7] ANTENNA_wire25_A.DIODE (0.105:0.105:0.105) (0.052:0.052:0.052))
+    (INTERCONNECT ch_in[8] u_rp\[8\]\.u_buf.A (0.032:0.032:0.032) (0.015:0.015:0.015))
+    (INTERCONNECT ch_in[8] ANTENNA_u_rp\[8\]\.u_buf_A.DIODE (0.032:0.032:0.032) (0.015:0.015:0.015))
+    (INTERCONNECT ch_in[9] u_rp\[9\]\.u_buf.A (0.323:0.323:0.323) (0.167:0.167:0.167))
+    (INTERCONNECT ch_in[9] ANTENNA_u_rp\[9\]\.u_buf_A.DIODE (0.323:0.323:0.323) (0.167:0.167:0.167))
+    (INTERCONNECT u_rp\[0\]\.u_buf.X ch_out[0] (0.002:0.002:0.002) (0.002:0.002:0.002))
+    (INTERCONNECT u_rp\[10\]\.u_buf.X ch_out[10] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[11\]\.u_buf.X ch_out[11] (0.025:0.025:0.025) (0.024:0.024:0.024))
+    (INTERCONNECT u_rp\[12\]\.u_buf.X ch_out[12] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[13\]\.u_buf.X ch_out[13] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[14\]\.u_buf.X ch_out[14] (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[15\]\.u_buf.X ch_out[15] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[16\]\.u_buf.X ch_out[16] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[17\]\.u_buf.X ch_out[17] (0.010:0.010:0.010) (0.010:0.010:0.010))
+    (INTERCONNECT u_rp\[18\]\.u_buf.X ch_out[18] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[19\]\.u_buf.X ch_out[19] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[1\]\.u_buf.X ch_out[1] (0.002:0.002:0.002) (0.002:0.002:0.002))
+    (INTERCONNECT u_rp\[20\]\.u_buf.X ch_out[20] (0.035:0.035:0.035) (0.034:0.034:0.034))
+    (INTERCONNECT u_rp\[21\]\.u_buf.X ch_out[21] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[22\]\.u_buf.X ch_out[22] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[23\]\.u_buf.X wire24.A (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[23\]\.u_buf.X ANTENNA_wire24_A.DIODE (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[24\]\.u_buf.X ch_out[24] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[25\]\.u_buf.X ch_out[25] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[26\]\.u_buf.X wire23.A (0.016:0.016:0.016) (0.016:0.016:0.016))
+    (INTERCONNECT u_rp\[26\]\.u_buf.X ANTENNA_wire23_A.DIODE (0.016:0.016:0.016) (0.016:0.016:0.016))
+    (INTERCONNECT u_rp\[27\]\.u_buf.X ch_out[27] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[28\]\.u_buf.X ch_out[28] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[29\]\.u_buf.X wire22.A (0.003:0.003:0.003) (0.002:0.002:0.002))
+    (INTERCONNECT u_rp\[29\]\.u_buf.X ANTENNA_wire22_A.DIODE (0.002:0.002:0.002) (0.002:0.002:0.002))
+    (INTERCONNECT u_rp\[2\]\.u_buf.X wire20.A (0.000:0.000:0.000) (0.000:0.000:0.000))
+    (INTERCONNECT u_rp\[30\]\.u_buf.X ch_out[30] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[31\]\.u_buf.X ch_out[31] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[32\]\.u_buf.X wire18.A (0.022:0.022:0.022) (0.022:0.022:0.022))
+    (INTERCONNECT u_rp\[32\]\.u_buf.X ANTENNA_wire18_A.DIODE (0.022:0.022:0.022) (0.022:0.022:0.022))
+    (INTERCONNECT u_rp\[33\]\.u_buf.X ch_out[33] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[34\]\.u_buf.X ch_out[34] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[35\]\.u_buf.X wire16.A (0.001:0.001:0.001) (0.001:0.001:0.001))
+    (INTERCONNECT u_rp\[36\]\.u_buf.X ch_out[36] (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[37\]\.u_buf.X ch_out[37] (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[38\]\.u_buf.X wire13.A (0.014:0.014:0.014) (0.014:0.014:0.014))
+    (INTERCONNECT u_rp\[38\]\.u_buf.X ANTENNA_wire13_A.DIODE (0.014:0.014:0.014) (0.014:0.014:0.014))
+    (INTERCONNECT u_rp\[39\]\.u_buf.X ch_out[39] (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[3\]\.u_buf.X ch_out[3] (0.002:0.002:0.002) (0.002:0.002:0.002))
+    (INTERCONNECT u_rp\[40\]\.u_buf.X ch_out[40] (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[41\]\.u_buf.X wire10.A (0.001:0.001:0.001) (0.001:0.001:0.001))
+    (INTERCONNECT u_rp\[42\]\.u_buf.X ch_out[42] (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[43\]\.u_buf.X ch_out[43] (0.004:0.004:0.004) (0.004:0.004:0.004))
+    (INTERCONNECT u_rp\[44\]\.u_buf.X wire6.A (0.010:0.010:0.010) (0.010:0.010:0.010))
+    (INTERCONNECT u_rp\[44\]\.u_buf.X ANTENNA_wire6_A.DIODE (0.010:0.010:0.010) (0.010:0.010:0.010))
+    (INTERCONNECT u_rp\[4\]\.u_buf.X ch_out[4] (0.002:0.002:0.002) (0.002:0.002:0.002))
+    (INTERCONNECT u_rp\[5\]\.u_buf.X wire2.A (0.015:0.015:0.015) (0.015:0.015:0.015))
+    (INTERCONNECT u_rp\[5\]\.u_buf.X ANTENNA_wire2_A.DIODE (0.015:0.015:0.015) (0.015:0.015:0.015))
+    (INTERCONNECT u_rp\[6\]\.u_buf.X ch_out[6] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[7\]\.u_buf.X ch_out[7] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT u_rp\[8\]\.u_buf.X wire1.A (0.001:0.001:0.001) (0.001:0.001:0.001))
+    (INTERCONNECT u_rp\[9\]\.u_buf.X ch_out[9] (0.003:0.003:0.003) (0.003:0.003:0.003))
+    (INTERCONNECT wire1.X ch_out[8] (0.039:0.039:0.039) (0.038:0.038:0.038))
+    (INTERCONNECT wire2.X ch_out[5] (0.031:0.031:0.031) (0.030:0.030:0.030))
+    (INTERCONNECT wire3.X ch_out[44] (0.037:0.037:0.037) (0.035:0.035:0.035))
+    (INTERCONNECT wire4.X wire3.A (0.036:0.036:0.036) (0.034:0.034:0.034))
+    (INTERCONNECT wire4.X ANTENNA_wire3_A.DIODE (0.035:0.035:0.035) (0.034:0.034:0.034))
+    (INTERCONNECT wire5.X wire4.A (0.032:0.032:0.032) (0.030:0.030:0.030))
+    (INTERCONNECT wire5.X ANTENNA_wire4_A.DIODE (0.032:0.032:0.032) (0.030:0.030:0.030))
+    (INTERCONNECT wire6.X wire5.A (0.034:0.034:0.034) (0.032:0.032:0.032))
+    (INTERCONNECT wire6.X ANTENNA_wire5_A.DIODE (0.034:0.034:0.034) (0.032:0.032:0.032))
+    (INTERCONNECT wire7.X ch_out[41] (0.036:0.036:0.036) (0.034:0.034:0.034))
+    (INTERCONNECT wire8.X wire7.A (0.033:0.033:0.033) (0.031:0.031:0.031))
+    (INTERCONNECT wire8.X ANTENNA_wire7_A.DIODE (0.033:0.033:0.033) (0.031:0.031:0.031))
+    (INTERCONNECT wire9.X wire8.A (0.032:0.032:0.032) (0.030:0.030:0.030))
+    (INTERCONNECT wire9.X ANTENNA_wire8_A.DIODE (0.032:0.032:0.032) (0.030:0.030:0.030))
+    (INTERCONNECT wire10.X wire9.A (0.028:0.028:0.028) (0.027:0.027:0.027))
+    (INTERCONNECT wire10.X ANTENNA_wire9_A.DIODE (0.028:0.028:0.028) (0.027:0.027:0.027))
+    (INTERCONNECT wire11.X ch_out[38] (0.045:0.045:0.045) (0.044:0.044:0.044))
+    (INTERCONNECT wire12.X wire11.A (0.043:0.043:0.043) (0.042:0.042:0.042))
+    (INTERCONNECT wire12.X ANTENNA_wire11_A.DIODE (0.043:0.043:0.043) (0.042:0.042:0.042))
+    (INTERCONNECT wire13.X wire12.A (0.028:0.028:0.028) (0.027:0.027:0.027))
+    (INTERCONNECT wire13.X ANTENNA_wire12_A.DIODE (0.028:0.028:0.028) (0.027:0.027:0.027))
+    (INTERCONNECT wire14.X ch_out[35] (0.055:0.055:0.055) (0.054:0.054:0.054))
+    (INTERCONNECT wire15.X wire14.A (0.042:0.042:0.042) (0.040:0.040:0.040))
+    (INTERCONNECT wire15.X ANTENNA_wire14_A.DIODE (0.042:0.042:0.042) (0.040:0.040:0.040))
+    (INTERCONNECT wire16.X wire15.A (0.021:0.021:0.021) (0.021:0.021:0.021))
+    (INTERCONNECT wire16.X ANTENNA_wire15_A.DIODE (0.021:0.021:0.021) (0.021:0.021:0.021))
+    (INTERCONNECT wire17.X ch_out[32] (0.055:0.055:0.055) (0.054:0.054:0.054))
+    (INTERCONNECT wire18.X wire17.A (0.042:0.042:0.042) (0.040:0.040:0.040))
+    (INTERCONNECT wire18.X ANTENNA_wire17_A.DIODE (0.042:0.042:0.042) (0.040:0.040:0.040))
+    (INTERCONNECT wire19.X ch_out[2] (0.051:0.051:0.051) (0.050:0.050:0.050))
+    (INTERCONNECT wire20.X wire19.A (0.030:0.030:0.030) (0.028:0.028:0.028))
+    (INTERCONNECT wire20.X ANTENNA_wire19_A.DIODE (0.030:0.030:0.030) (0.028:0.028:0.028))
+    (INTERCONNECT wire21.X ch_out[29] (0.043:0.043:0.043) (0.041:0.041:0.041))
+    (INTERCONNECT wire22.X wire21.A (0.041:0.041:0.041) (0.039:0.039:0.039))
+    (INTERCONNECT wire22.X ANTENNA_wire21_A.DIODE (0.041:0.041:0.041) (0.039:0.039:0.039))
+    (INTERCONNECT wire23.X ch_out[26] (0.052:0.052:0.052) (0.051:0.051:0.051))
+    (INTERCONNECT wire24.X ch_out[23] (0.039:0.039:0.039) (0.037:0.037:0.037))
+    (INTERCONNECT wire25.X u_rp\[7\]\.u_buf.A (0.024:0.024:0.024) (0.023:0.023:0.023))
+    (INTERCONNECT wire25.X ANTENNA_u_rp\[7\]\.u_buf_A.DIODE (0.024:0.024:0.024) (0.023:0.023:0.023))
+    (INTERCONNECT wire26.X u_rp\[6\]\.u_buf.A (0.028:0.028:0.028) (0.027:0.027:0.027))
+    (INTERCONNECT wire26.X ANTENNA_u_rp\[6\]\.u_buf_A.DIODE (0.028:0.028:0.028) (0.027:0.027:0.027))
+    (INTERCONNECT wire27.X u_rp\[4\]\.u_buf.A (0.018:0.018:0.018) (0.017:0.017:0.017))
+    (INTERCONNECT wire27.X ANTENNA_u_rp\[4\]\.u_buf_A.DIODE (0.018:0.018:0.018) (0.017:0.017:0.017))
+    (INTERCONNECT wire28.X u_rp\[43\]\.u_buf.A (0.022:0.022:0.022) (0.021:0.021:0.021))
+    (INTERCONNECT wire28.X ANTENNA_u_rp\[43\]\.u_buf_A.DIODE (0.022:0.022:0.022) (0.021:0.021:0.021))
+    (INTERCONNECT wire29.X wire28.A (0.024:0.024:0.024) (0.022:0.022:0.022))
+    (INTERCONNECT wire29.X ANTENNA_wire28_A.DIODE (0.023:0.023:0.023) (0.022:0.022:0.022))
+    (INTERCONNECT wire30.X wire29.A (0.037:0.037:0.037) (0.035:0.035:0.035))
+    (INTERCONNECT wire30.X ANTENNA_wire29_A.DIODE (0.037:0.037:0.037) (0.035:0.035:0.035))
+    (INTERCONNECT wire31.X wire30.A (0.023:0.023:0.023) (0.023:0.023:0.023))
+    (INTERCONNECT wire31.X ANTENNA_wire30_A.DIODE (0.023:0.023:0.023) (0.023:0.023:0.023))
+    (INTERCONNECT wire32.X u_rp\[42\]\.u_buf.A (0.017:0.017:0.017) (0.017:0.017:0.017))
+    (INTERCONNECT wire32.X ANTENNA_u_rp\[42\]\.u_buf_A.DIODE (0.017:0.017:0.017) (0.017:0.017:0.017))
+    (INTERCONNECT wire33.X wire32.A (0.033:0.033:0.033) (0.031:0.031:0.031))
+    (INTERCONNECT wire33.X ANTENNA_wire32_A.DIODE (0.033:0.033:0.033) (0.031:0.031:0.031))
+    (INTERCONNECT wire34.X wire33.A (0.030:0.030:0.030) (0.028:0.028:0.028))
+    (INTERCONNECT wire34.X ANTENNA_wire33_A.DIODE (0.030:0.030:0.030) (0.028:0.028:0.028))
+    (INTERCONNECT wire35.X wire34.A (0.029:0.029:0.029) (0.028:0.028:0.028))
+    (INTERCONNECT wire35.X ANTENNA_wire34_A.DIODE (0.029:0.029:0.029) (0.028:0.028:0.028))
+    (INTERCONNECT wire36.X u_rp\[40\]\.u_buf.A (0.038:0.038:0.038) (0.036:0.036:0.036))
+    (INTERCONNECT wire36.X ANTENNA_u_rp\[40\]\.u_buf_A.DIODE (0.038:0.038:0.038) (0.036:0.036:0.036))
+    (INTERCONNECT wire37.X wire36.A (0.006:0.006:0.006) (0.006:0.006:0.006))
+    (INTERCONNECT wire37.X ANTENNA_wire36_A.DIODE (0.006:0.006:0.006) (0.006:0.006:0.006))
+    (INTERCONNECT wire38.X wire37.A (0.005:0.005:0.005) (0.005:0.005:0.005))
+    (INTERCONNECT wire38.X ANTENNA_wire37_A.DIODE (0.005:0.005:0.005) (0.005:0.005:0.005))
+    (INTERCONNECT wire39.X u_rp\[3\]\.u_buf.A (0.031:0.031:0.031) (0.030:0.030:0.030))
+    (INTERCONNECT wire39.X ANTENNA_u_rp\[3\]\.u_buf_A.DIODE (0.031:0.031:0.031) (0.030:0.030:0.030))
+    (INTERCONNECT wire40.X u_rp\[39\]\.u_buf.A (0.030:0.030:0.030) (0.028:0.028:0.028))
+    (INTERCONNECT wire40.X ANTENNA_u_rp\[39\]\.u_buf_A.DIODE (0.030:0.030:0.030) (0.028:0.028:0.028))
+    (INTERCONNECT wire41.X wire40.A (0.031:0.031:0.031) (0.029:0.029:0.029))
+    (INTERCONNECT wire41.X ANTENNA_wire40_A.DIODE (0.031:0.031:0.031) (0.029:0.029:0.029))
+    (INTERCONNECT wire42.X wire41.A (0.037:0.037:0.037) (0.035:0.035:0.035))
+    (INTERCONNECT wire42.X ANTENNA_wire41_A.DIODE (0.037:0.037:0.037) (0.035:0.035:0.035))
+    (INTERCONNECT wire43.X u_rp\[37\]\.u_buf.A (0.022:0.022:0.022) (0.021:0.021:0.021))
+    (INTERCONNECT wire43.X ANTENNA_u_rp\[37\]\.u_buf_A.DIODE (0.022:0.022:0.022) (0.021:0.021:0.021))
+    (INTERCONNECT wire44.X wire43.A (0.031:0.031:0.031) (0.029:0.029:0.029))
+    (INTERCONNECT wire44.X ANTENNA_wire43_A.DIODE (0.031:0.031:0.031) (0.029:0.029:0.029))
+    (INTERCONNECT wire45.X wire44.A (0.033:0.033:0.033) (0.031:0.031:0.031))
+    (INTERCONNECT wire45.X ANTENNA_wire44_A.DIODE (0.033:0.033:0.033) (0.031:0.031:0.031))
+    (INTERCONNECT wire46.X u_rp\[36\]\.u_buf.A (0.024:0.024:0.024) (0.023:0.023:0.023))
+    (INTERCONNECT wire46.X ANTENNA_u_rp\[36\]\.u_buf_A.DIODE (0.024:0.024:0.024) (0.023:0.023:0.023))
+    (INTERCONNECT wire47.X wire46.A (0.035:0.035:0.035) (0.033:0.033:0.033))
+    (INTERCONNECT wire47.X ANTENNA_wire46_A.DIODE (0.035:0.035:0.035) (0.033:0.033:0.033))
+    (INTERCONNECT wire48.X wire47.A (0.036:0.036:0.036) (0.034:0.034:0.034))
+    (INTERCONNECT wire48.X ANTENNA_wire47_A.DIODE (0.036:0.036:0.036) (0.034:0.034:0.034))
+    (INTERCONNECT wire49.X u_rp\[34\]\.u_buf.A (0.029:0.029:0.029) (0.027:0.027:0.027))
+    (INTERCONNECT wire49.X ANTENNA_u_rp\[34\]\.u_buf_A.DIODE (0.029:0.029:0.029) (0.027:0.027:0.027))
+    (INTERCONNECT wire50.X wire49.A (0.028:0.028:0.028) (0.026:0.026:0.026))
+    (INTERCONNECT wire50.X ANTENNA_wire49_A.DIODE (0.028:0.028:0.028) (0.026:0.026:0.026))
+    (INTERCONNECT wire51.X u_rp\[33\]\.u_buf.A (0.019:0.019:0.019) (0.019:0.019:0.019))
+    (INTERCONNECT wire51.X ANTENNA_u_rp\[33\]\.u_buf_A.DIODE (0.019:0.019:0.019) (0.019:0.019:0.019))
+    (INTERCONNECT wire52.X wire51.A (0.035:0.035:0.035) (0.033:0.033:0.033))
+    (INTERCONNECT wire52.X ANTENNA_wire51_A.DIODE (0.035:0.035:0.035) (0.033:0.033:0.033))
+    (INTERCONNECT wire53.X u_rp\[31\]\.u_buf.A (0.029:0.029:0.029) (0.028:0.028:0.028))
+    (INTERCONNECT wire53.X ANTENNA_u_rp\[31\]\.u_buf_A.DIODE (0.029:0.029:0.029) (0.028:0.028:0.028))
+    (INTERCONNECT wire54.X wire53.A (0.040:0.040:0.040) (0.038:0.038:0.038))
+    (INTERCONNECT wire54.X ANTENNA_wire53_A.DIODE (0.040:0.040:0.040) (0.038:0.038:0.038))
+    (INTERCONNECT wire55.X u_rp\[30\]\.u_buf.A (0.029:0.029:0.029) (0.028:0.028:0.028))
+    (INTERCONNECT wire55.X ANTENNA_u_rp\[30\]\.u_buf_A.DIODE (0.029:0.029:0.029) (0.028:0.028:0.028))
+    (INTERCONNECT wire56.X wire55.A (0.040:0.040:0.040) (0.038:0.038:0.038))
+    (INTERCONNECT wire56.X ANTENNA_wire55_A.DIODE (0.040:0.040:0.040) (0.038:0.038:0.038))
+    (INTERCONNECT wire57.X u_rp\[28\]\.u_buf.A (0.038:0.038:0.038) (0.036:0.036:0.036))
+    (INTERCONNECT wire57.X ANTENNA_u_rp\[28\]\.u_buf_A.DIODE (0.038:0.038:0.038) (0.036:0.036:0.036))
+    (INTERCONNECT wire58.X wire57.A (0.037:0.037:0.037) (0.035:0.035:0.035))
+    (INTERCONNECT wire58.X ANTENNA_wire57_A.DIODE (0.037:0.037:0.037) (0.035:0.035:0.035))
+    (INTERCONNECT wire59.X u_rp\[27\]\.u_buf.A (0.036:0.036:0.036) (0.034:0.034:0.034))
+    (INTERCONNECT wire59.X ANTENNA_u_rp\[27\]\.u_buf_A.DIODE (0.036:0.036:0.036) (0.034:0.034:0.034))
+    (INTERCONNECT wire60.X u_rp\[25\]\.u_buf.A (0.018:0.018:0.018) (0.017:0.017:0.017))
+    (INTERCONNECT wire60.X ANTENNA_u_rp\[25\]\.u_buf_A.DIODE (0.018:0.018:0.018) (0.017:0.017:0.017))
+    (INTERCONNECT wire61.X u_rp\[24\]\.u_buf.A (0.018:0.018:0.018) (0.018:0.018:0.018))
+    (INTERCONNECT wire61.X ANTENNA_u_rp\[24\]\.u_buf_A.DIODE (0.018:0.018:0.018) (0.018:0.018:0.018))
+    (INTERCONNECT wire62.X u_rp\[22\]\.u_buf.A (0.032:0.032:0.032) (0.031:0.031:0.031))
+    (INTERCONNECT wire62.X ANTENNA_u_rp\[22\]\.u_buf_A.DIODE (0.032:0.032:0.032) (0.031:0.031:0.031))
+    (INTERCONNECT wire63.X u_rp\[1\]\.u_buf.A (0.023:0.023:0.023) (0.022:0.022:0.022))
+    (INTERCONNECT wire63.X ANTENNA_u_rp\[1\]\.u_buf_A.DIODE (0.023:0.023:0.023) (0.022:0.022:0.022))
+    (INTERCONNECT wire64.X wire63.A (0.025:0.025:0.025) (0.024:0.024:0.024))
+    (INTERCONNECT wire64.X ANTENNA_wire63_A.DIODE (0.025:0.025:0.025) (0.024:0.024:0.024))
+    (INTERCONNECT wire65.X u_rp\[0\]\.u_buf.A (0.025:0.025:0.025) (0.024:0.024:0.024))
+    (INTERCONNECT wire65.X ANTENNA_u_rp\[0\]\.u_buf_A.DIODE (0.025:0.025:0.025) (0.024:0.024:0.024))
+    (INTERCONNECT wire66.X wire65.A (0.026:0.026:0.026) (0.025:0.025:0.025))
+    (INTERCONNECT wire66.X ANTENNA_wire65_A.DIODE (0.026:0.026:0.026) (0.025:0.025:0.025))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[0\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.255:0.255:0.255) (0.208:0.208:0.208))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[10\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.301:0.301:0.301) (0.254:0.254:0.254))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[11\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.368:0.368:0.368) (0.245:0.245:0.245))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[12\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.257:0.257:0.257) (0.207:0.207:0.207))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[13\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.248:0.248:0.248) (0.199:0.199:0.199))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[14\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.237:0.237:0.237) (0.189:0.189:0.189))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[15\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.207:0.207:0.207) (0.174:0.174:0.174))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[16\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.231:0.231:0.231) (0.187:0.187:0.187))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[17\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.293:0.293:0.293) (0.215:0.215:0.215))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[18\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.272:0.272:0.272) (0.219:0.219:0.219))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[19\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.289:0.289:0.289) (0.234:0.234:0.234))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[1\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.245:0.245:0.245) (0.204:0.204:0.204))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[20\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.426:0.426:0.426) (0.269:0.269:0.269))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[21\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.307:0.307:0.307) (0.256:0.256:0.256))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[22\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.294:0.294:0.294) (0.264:0.264:0.264))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__clkbuf_2")
+  (INSTANCE u_rp\[23\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.192:0.192:0.192) (0.164:0.164:0.164))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[24\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.263:0.263:0.263) (0.213:0.213:0.213))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[25\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.254:0.254:0.254) (0.205:0.205:0.205))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[26\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.272:0.272:0.272) (0.202:0.202:0.202))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[27\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.267:0.267:0.267) (0.220:0.220:0.220))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[28\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.270:0.270:0.270) (0.222:0.222:0.222))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__clkbuf_2")
+  (INSTANCE u_rp\[29\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.168:0.168:0.168) (0.146:0.146:0.146))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__clkbuf_1")
+  (INSTANCE u_rp\[2\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.114:0.114:0.114) (0.095:0.095:0.095))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[30\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.272:0.272:0.272) (0.219:0.219:0.219))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[31\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.262:0.262:0.262) (0.213:0.213:0.213))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[32\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.322:0.322:0.322) (0.222:0.222:0.222))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[33\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.261:0.261:0.261) (0.209:0.209:0.209))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[34\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.266:0.266:0.266) (0.215:0.215:0.215))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__clkbuf_1")
+  (INSTANCE u_rp\[35\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.200:0.200:0.200) (0.142:0.142:0.142))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[36\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.266:0.266:0.266) (0.213:0.213:0.213))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[37\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.263:0.263:0.263) (0.211:0.211:0.211))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[38\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.298:0.298:0.298) (0.216:0.216:0.216))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[39\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.273:0.273:0.273) (0.219:0.219:0.219))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[3\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.259:0.259:0.259) (0.214:0.214:0.214))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[40\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.275:0.275:0.275) (0.224:0.224:0.224))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__clkbuf_1")
+  (INSTANCE u_rp\[41\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.184:0.184:0.184) (0.134:0.134:0.134))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[42\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.241:0.241:0.241) (0.198:0.198:0.198))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[43\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.244:0.244:0.244) (0.201:0.201:0.201))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[44\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.270:0.270:0.270) (0.204:0.204:0.204))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[4\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.246:0.246:0.246) (0.201:0.201:0.201))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[5\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.270:0.270:0.270) (0.201:0.201:0.201))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[6\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.265:0.265:0.265) (0.219:0.219:0.219))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[7\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.272:0.272:0.272) (0.221:0.221:0.221))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__clkbuf_1")
+  (INSTANCE u_rp\[8\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.162:0.162:0.162) (0.122:0.122:0.122))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE u_rp\[9\]\.u_buf)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.313:0.313:0.313) (0.272:0.272:0.272))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_2")
+  (INSTANCE wire1)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.451:0.451:0.451) (0.288:0.288:0.288))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire2)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.318:0.318:0.318) (0.250:0.250:0.250))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire3)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.235:0.235:0.235) (0.190:0.190:0.190))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire4)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.215:0.215:0.215) (0.176:0.176:0.176))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire5)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.211:0.211:0.211) (0.177:0.177:0.177))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire6)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.237:0.237:0.237) (0.194:0.194:0.194))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire7)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.232:0.232:0.232) (0.188:0.188:0.188))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire8)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.242:0.242:0.242) (0.193:0.193:0.193))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire9)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.221:0.221:0.221) (0.185:0.185:0.185))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire10)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.267:0.267:0.267) (0.216:0.216:0.216))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire11)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.254:0.254:0.254) (0.200:0.200:0.200))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire12)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.228:0.228:0.228) (0.177:0.177:0.177))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire13)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.238:0.238:0.238) (0.205:0.205:0.205))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire14)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.269:0.269:0.269) (0.201:0.201:0.201))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire15)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.242:0.242:0.242) (0.189:0.189:0.189))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire16)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.289:0.289:0.289) (0.232:0.232:0.232))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire17)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.359:0.359:0.359) (0.252:0.252:0.252))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire18)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.258:0.258:0.258) (0.217:0.217:0.217))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire19)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.269:0.269:0.269) (0.201:0.201:0.201))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire20)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.246:0.246:0.246) (0.198:0.198:0.198))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire21)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.261:0.261:0.261) (0.210:0.210:0.210))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire22)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.281:0.281:0.281) (0.222:0.222:0.222))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire23)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.281:0.281:0.281) (0.210:0.210:0.210))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire24)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.302:0.302:0.302) (0.240:0.240:0.240))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire25)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.273:0.273:0.273) (0.217:0.217:0.217))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire26)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.255:0.255:0.255) (0.208:0.208:0.208))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire27)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.234:0.234:0.234) (0.215:0.215:0.215))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_12")
+  (INSTANCE wire28)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.161:0.161:0.161) (0.160:0.160:0.160))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_8")
+  (INSTANCE wire29)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.199:0.199:0.199) (0.181:0.181:0.181))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire30)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.230:0.230:0.230) (0.187:0.187:0.187))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire31)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.290:0.290:0.290) (0.230:0.230:0.230))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_12")
+  (INSTANCE wire32)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.163:0.163:0.163) (0.166:0.166:0.166))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_8")
+  (INSTANCE wire33)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.191:0.191:0.191) (0.170:0.170:0.170))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire34)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.234:0.234:0.234) (0.197:0.197:0.197))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire35)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.298:0.298:0.298) (0.224:0.224:0.224))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire36)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.223:0.223:0.223) (0.172:0.172:0.172))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire37)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.225:0.225:0.225) (0.183:0.183:0.183))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire38)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.240:0.240:0.240) (0.213:0.213:0.213))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire39)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.258:0.258:0.258) (0.236:0.236:0.236))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire40)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.242:0.242:0.242) (0.195:0.195:0.195))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire41)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.242:0.242:0.242) (0.197:0.197:0.197))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire42)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.255:0.255:0.255) (0.218:0.218:0.218))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire43)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.213:0.213:0.213) (0.182:0.182:0.182))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire44)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.241:0.241:0.241) (0.202:0.202:0.202))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire45)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.320:0.320:0.320) (0.242:0.242:0.242))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire46)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.219:0.219:0.219) (0.186:0.186:0.186))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire47)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.230:0.230:0.230) (0.193:0.193:0.193))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire48)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.278:0.278:0.278) (0.216:0.216:0.216))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire49)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.217:0.217:0.217) (0.180:0.180:0.180))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire50)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.256:0.256:0.256) (0.245:0.245:0.245))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire51)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.219:0.219:0.219) (0.189:0.189:0.189))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire52)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.246:0.246:0.246) (0.216:0.216:0.216))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire53)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.212:0.212:0.212) (0.183:0.183:0.183))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire54)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.241:0.241:0.241) (0.192:0.192:0.192))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire55)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.258:0.258:0.258) (0.215:0.215:0.215))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire56)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.294:0.294:0.294) (0.221:0.221:0.221))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire57)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.238:0.238:0.238) (0.197:0.197:0.197))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire58)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.246:0.246:0.246) (0.191:0.191:0.191))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire59)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.248:0.248:0.248) (0.216:0.216:0.216))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire60)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.216:0.216:0.216) (0.186:0.186:0.186))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire61)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.257:0.257:0.257) (0.216:0.216:0.216))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__clkbuf_4")
+  (INSTANCE wire62)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.317:0.317:0.317) (0.255:0.255:0.255))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire63)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.200:0.200:0.200) (0.176:0.176:0.176))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire64)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.230:0.230:0.230) (0.192:0.192:0.192))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_6")
+  (INSTANCE wire65)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.239:0.239:0.239) (0.200:0.200:0.200))
+   )
+  )
+ )
+ (CELL
+  (CELLTYPE "sky130_fd_sc_hd__buf_4")
+  (INSTANCE wire66)
+  (DELAY
+   (ABSOLUTE
+    (IOPATH A X (0.276:0.276:0.276) (0.215:0.215:0.215))
+   )
+  )
+ )
+)

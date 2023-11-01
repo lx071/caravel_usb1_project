@@ -1,11 +1,11 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1698751204
+timestamp 1698806502
 << obsli1 >>
 rect 1104 2159 98808 137649
 << obsm1 >>
-rect 106 892 98808 138168
+rect 106 892 98808 137680
 << metal2 >>
 rect 110 139200 166 140000
 rect 294 139200 350 140000
@@ -131,14 +131,12 @@ rect 73748 2128 74988 137680
 rect 83748 2128 84988 137680
 rect 93748 2128 94988 137680
 << obsm4 >>
-rect 1899 27507 3668 133925
-rect 5068 27507 13668 133925
-rect 15068 27507 23668 133925
-rect 25068 27507 33668 133925
-rect 35068 27507 43668 133925
-rect 45068 27507 53668 133925
-rect 55068 27507 63668 133925
-rect 65068 27507 65997 133925
+rect 1715 67899 3668 134741
+rect 5068 67899 13668 134741
+rect 15068 67899 23668 134741
+rect 25068 67899 33668 134741
+rect 35068 67899 43668 134741
+rect 45068 67899 48517 134741
 << labels >>
 rlabel metal3 s 0 61752 800 61872 6 app_clk
 port 1 nsew signal input
@@ -354,8 +352,8 @@ port 97 nsew signal output
 string FIXED_BBOX 0 0 100000 140000
 string LEFclass BLOCK
 string LEFview TRUE
-string GDS_END 22840512
+string GDS_END 16251476
 string GDS_FILE /home/lx/projects/caravel_env/caravel_usb_test/openlane/usb_top/runs/usb_top/results/signoff/usb_top.magic.gds
-string GDS_START 947178
+string GDS_START 810296
 << end >>
 

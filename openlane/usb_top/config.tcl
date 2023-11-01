@@ -68,6 +68,8 @@ set ::env(VERILOG_FILES) "\
     $::env(DESIGN_DIR)/../../verilog/rtl/lib/ctech_cells.sv     \
     "
 
+set ::env(ROUTING_CORES) 1
+
 set ::env(SYNTH_NO_FLAT) {1}
 set ::env(SYNTH_READ_BLACKBOX_LIB) 1
 set ::env(VERILOG_INCLUDE_DIRS) [glob $::env(DESIGN_DIR)/../../verilog/rtl/usb1_host/src/includes ]
