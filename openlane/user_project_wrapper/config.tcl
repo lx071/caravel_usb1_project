@@ -175,11 +175,11 @@ set ::env(GRT_OBS) "                              \
 #set ::env(FP_PDN_POWER_STRAPS) "vccd1 vssd1 1, vccd2 vssd2 0, vdda1 vssa1 1, vdda2 vssa2 1"
 
 set ::env(FP_PDN_MACRO_HOOKS) " \
-    u_pll                       vccd1 vssd1 VPWR  VGND, \
+    	u_pll                       vccd1 vssd1 VPWR  VGND, \
 	u_intercon                  vccd1 vssd1 vccd1 vssd1,\
 	u_pinmux                    vccd1 vssd1 vccd1 vssd1,\
 
-	u_usb_top          		    vccd1 vssd1 vccd1 vssd1,\
+	u_usb_top                   vccd1 vssd1 vccd1 vssd1,\
 	u_wb_host                   vccd1 vssd1 vccd1 vssd1,\
 
 	u_rp_south                  vccd1 vssd1 vccd1 vssd1,\
