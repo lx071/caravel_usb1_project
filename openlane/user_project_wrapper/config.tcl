@@ -42,15 +42,7 @@ set ::env(DESIGN_IS_CORE) 1
 
 ## Source Verilog Files
 set ::env(VERILOG_FILES) "\
-	$::env(DESIGN_DIR)/../../verilog/rtl/user_project_wrapper.v \
-	$::env(DESIGN_DIR)/../../verilog/rtl/dg_pll/src/dg_pll.v \
-	$::env(DESIGN_DIR)/../../verilog/rtl/dg_pll/src/digital_pll_controller.v \
-	$::env(DESIGN_DIR)/../../verilog/rtl/dg_pll/src/ring_osc2x13.v \
-	$::env(DESIGN_DIR)/../../verilog/rtl/bus_rep/bus_rep_east.sv \
-	$::env(DESIGN_DIR)/../../verilog/rtl/bus_rep/bus_rep_north.sv \
-	$::env(DESIGN_DIR)/../../verilog/rtl/bus_rep/bus_rep_south.sv \
-	$::env(DESIGN_DIR)/../../verilog/rtl/bus_rep/bus_rep_west.sv \
-	"
+	$::env(DESIGN_DIR)/../../verilog/rtl/user_project_wrapper.v"
 
 set ::env(ROUTING_CORES) 1
 
@@ -79,8 +71,13 @@ set ::env(VERILOG_FILES_BLACKBOX) "\
         $::env(DESIGN_DIR)/../../verilog/gl/usb_top.v     \
 	    $::env(DESIGN_DIR)/../../verilog/gl/wb_host.v \
 
+	    $::env(DESIGN_DIR)/../../verilog/gl/dg_pll.v \
 	    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/verilog/sky130_sram_2kbyte_1rw1r_32x512_8.v \
 
+	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_south.v \
+	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_north.v \
+	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_east.v \
+	    $::env(DESIGN_DIR)/../../verilog/gl/bus_rep_west.v \
 	    "
 
 set ::env(EXTRA_LEFS) "\
@@ -89,8 +86,13 @@ set ::env(EXTRA_LEFS) "\
 	$lef_root/usb_top.lef \
 	$lef_root/wb_host.lef \
 
+	$lef_root/dg_pll.lef \
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/lef/sky130_sram_2kbyte_1rw1r_32x512_8.lef \
 	
+	$lef_root/bus_rep_south.lef \
+	$lef_root/bus_rep_north.lef \
+	$lef_root/bus_rep_east.lef \
+	$lef_root/bus_rep_west.lef \
 	"
 
 set ::env(EXTRA_GDS_FILES) "\
@@ -100,8 +102,14 @@ set ::env(EXTRA_GDS_FILES) "\
 	$gds_root/usb_top.gds \
 	$gds_root/wb_host.gds \
 	
+	$gds_root/dg_pll.gds \
+
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_sram_macros/gds/sky130_sram_2kbyte_1rw1r_32x512_8.gds \
 	
+	$gds_root/bus_rep_south.gds \
+	$gds_root/bus_rep_north.gds \
+	$gds_root/bus_rep_east.gds \
+	$gds_root/bus_rep_west.gds \
 
 	"
 
@@ -167,11 +175,11 @@ set ::env(GRT_OBS) "                              \
 #set ::env(FP_PDN_POWER_STRAPS) "vccd1 vssd1 1, vccd2 vssd2 0, vdda1 vssa1 1, vdda2 vssa2 1"
 
 set ::env(FP_PDN_MACRO_HOOKS) " \
-	u_pll                       vccd1 vssd1 VPWR  VGND, \
+    u_pll                       vccd1 vssd1 VPWR  VGND, \
 	u_intercon                  vccd1 vssd1 vccd1 vssd1,\
 	u_pinmux                    vccd1 vssd1 vccd1 vssd1,\
 
-	u_usb_top                   vccd1 vssd1 vccd1 vssd1,\
+	u_usb_top          		    vccd1 vssd1 vccd1 vssd1,\
 	u_wb_host                   vccd1 vssd1 vccd1 vssd1,\
 
 	u_rp_south                  vccd1 vssd1 vccd1 vssd1,\

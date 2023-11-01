@@ -158,7 +158,7 @@ if { $::env(FP_PDN_CORE_RING) == 1 } {
 define_pdn_grid \
     -macro \
     -name macro_1 \
-    -instances "u_pll u_intercon u_pinmux u_qspi_master u_tsram0_2kb u_icache_2kb u_dcache_2kb u_uart_i2c_usb_spi u_wb_host u_riscv_top.i_core_top_0 u_riscv_top.u_connect u_riscv_top.u_intf u_aes u_fpu u_peri" \
+    -instances "u_pll u_intercon u_pinmux u_usb_top u_wb_host " \
     -starts_with POWER \
     -halo "$::env(FP_PDN_HORIZONTAL_HALO) $::env(FP_PDN_VERTICAL_HALO)"
 
@@ -174,7 +174,7 @@ add_pdn_connect \
 define_pdn_grid \
     -macro \
     -name macro_2 \
-    -instances "u_rp_south u_rp_north u_4x8bit_dac" \
+    -instances "u_rp_south u_rp_north" \
     -starts_with POWER \
     -halo "$::env(FP_PDN_HORIZONTAL_HALO) $::env(FP_PDN_VERTICAL_HALO)"
 
@@ -193,3 +193,4 @@ define_pdn_grid \
     -halo "$::env(FP_PDN_HORIZONTAL_HALO) $::env(FP_PDN_VERTICAL_HALO)"
 
 add_pdn_connect -grid macro_3 -layers "met3 met5"
+

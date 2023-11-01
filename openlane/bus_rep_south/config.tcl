@@ -69,7 +69,7 @@ set ::env(FP_PIN_ORDER_CFG) $::env(DESIGN_DIR)/pin_order.cfg
 set ::env(MACRO_PLACEMENT_CFG) $::env(DESIGN_DIR)/macro.cfg
 
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 2650 50"
+set ::env(DIE_AREA) "0 0 2650 60"
 
 #set ::env(GRT_OBS) "met4  0 0 300 1725"
 
@@ -81,7 +81,7 @@ set ::env(RUN_CVC) 0
 
 
 set ::env(PL_TIME_DRIVEN) 1
-set ::env(PL_TARGET_DENSITY) "0.20"
+set ::env(PL_TARGET_DENSITY) "0.05"
 set ::env(CELL_PAD) "8"
 set ::env(GRT_ADJUSTMENT) 0.2
 

@@ -43,7 +43,7 @@ set ::env(FP_PIN_ORDER_CFG) $::env(DESIGN_DIR)/pin_order.cfg
 set ::env(MACRO_PLACEMENT_CFG) $::env(DESIGN_DIR)/macro.cfg
 
 set ::env(FP_SIZING) absolute
-set ::env(DIE_AREA) "0 0 90 100"
+set ::env(DIE_AREA) "0 0 100 100"
 set ::env(GRT_OBS)  "met4 0 0 90 100"
 
 
@@ -69,7 +69,7 @@ set ::env(FP_PDN_HORIZONTAL_HALO) "10"
 set ::env(FP_PDN_VERTICAL_HALO) "10"
 
 ## Placement
-set ::env(PL_TARGET_DENSITY) 0.82
+set ::env(PL_TARGET_DENSITY) 0.7
 
 
 ## Routing 
