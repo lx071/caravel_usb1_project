@@ -1,0 +1,519 @@
+system:
+-
+
+user:
+- First, we need to generate the usb_sie module. There is a parameter USB_CLK_FREQ which equals to 60000000. In this module, there are several inputs and outputs and I will list them as follows:
+- inputs
+  - clk
+  - rstn
+  - start
+  - in_transfer
+  - sof_transfer
+  - resp_expected
+  - token_pid(8bits)
+  - token_dev(7bits)
+  - token_ep(4bits)
+  - data_len(16bits)
+  - data_idx
+  - tx_data(8bits)
+  - utmi_txready
+  - utmi_data(8bits)
+  - utmi_rxvalid
+  - utmi_rxactive
+  - utmi_linestate(2bits)
+- outputs
+  - ack
+  - tx_pop
+  - rx_data(8bits)
+  - rx_push
+  - tx_done
+  - rx_done
+  - crc_err
+  - timeout
+  - response(8bits)
+  - rx_count(16bits)
+  - idle
+  - utmi_data(8bits)
+  - utmi_txvalid
+
+You need to denote all inputs with _i and all outputs with _o.
+
+assistant:
+- The USB Serial Interface Engine (usb_sie) module with designated inputs and outputs would be generated as follows:
+
+```verilog
+module usbh_sie
+#(
+    parameter USB_CLK_FREQ = 60000000
+)
+(
+    input wire clk,
+    input wire rstn,
+    input wire start_i,
+    input wire in_transfer_i,
+    input wire sof_transfer_i,
+    input wire resp_expected_i,
+    input wire [7:0] token_pid_i,
+    input wire [6:0] token_dev_i,
+    input wire [3:0] token_ep_i,
+    input wire [15:0] data_len_i,
+    input wire data_idx_i,
+    input wire [7:0] tx_data_i,
+    input wire utmi_txready_i,
+    input wire [7:0] utmi_data_i,
+    input wire utmi_rxvalid_i,
+    input wire utmi_rxactive_i,
+    input wire [1:0] utmi_linestate_i,
+
+    output wire ack_o,
+    output wire tx_pop_o,
+    output wire [7:0] rx_data_o,
+    output wire rx_push_o,
+    output wire tx_done_o,
+    output wire rx_done_o,
+    output wire crc_err_o,
+    output wire timeout_o,
+    output wire [7:0] response_o,
+    output wire [15:0] rx_count_o,
+    output wire idle_o,
+    output wire [7:0] utmi_data_o,
+    output wire utmi_txvalid_o
+);
+```
+// Description of the module behaviour should be added here.
+
+```verilog
+endmodule
+```
+Please note that the behaviour of the module needs to be described, the code above is a template for interface only.
+
+user:
+- Then, we need to prepare some registers and wires.You need to denote all registers with _q and all wires with _w.
+- registers
+  - start_ack
+  - status_tx_done
+  - status_rx_done
+  - status_crc_err
+  - status_timeout
+  - status_response(8bits)
+  - byte_count(16bits)
+  - in_transfer
+  - last_tx_time(8bits)
+  - send_data1
+  - send_sof
+  - send_ack
+  - crc_sum(16bits)
+  - token(16bits)
+  - wait_resp
+  - state(4bits)
+
+- wires
+  - crc_out(16bits)
+  - crc_data_in(8bits)
+  - crc5_out(5bits)
+  - crc5_next(5bits)(equal to crc5_out xor 5'h1F)
+
+assistant:
+- You need to define the registers and wires in the module as follows:
+
+```verilog
+module usb_sie
+#(
+    parameter USB_CLK_FREQ = 60000000
+)
+(
+    //...
+    // Inputs and Outputs go here
+    //...
+);
+
+    // Registers
+    reg start_ack_q;
+    reg status_tx_done_q;
+    reg status_rx_done_q;
+    reg status_crc_err_q;
+    reg status_timeout_q;
+    reg [7:0] status_response_q;
+    reg [15:0] byte_count_q;
+    reg in_transfer_q;
+    reg [7:0] last_tx_time_q;
+    reg send_data1_q;
+    reg send_sof_q;
+    reg send_ack_q;
+    reg [15:0] crc_sum_q;
+    reg [15:0] token_q;
+    reg wait_resp_q;
+    reg [3:0] state_q;
+
+    // Wires
+    wire [15:0] crc_out_w;
+    wire [7:0] crc_data_in_w;
+    wire [4:0] crc5_out_w;
+    wire [4:0] crc5_next_w; //equals to crc5_out_w xor 5'h1F
+
+    // Description of the module behaviour should be added here.
+
+endmodule
+```
+As with the previous section, this is a template. Replace comments with actual definitions and code.
+
+user:
+- Then, we need to make definitions. We use 'localparam' to define our constants.
+
+- RX_TIMEOUT(if USB_CLK_FREQ equals to 60000000, we make it equals to 9'd511, otherwise we make it equals to 9'd255)
+- TX_IFS(if USB_CLK_FREQ equals to 60000000, we make it equals to 4'd10, otherwise we make it equals to 4'd7)
+- PID_OUT(8'hE1)
+- PID_IN(8'h69)
+- PID_SOF(8'hA5)
+- PID_SETUP(8'h2D)
+- PID_DATA0(8'hC3)
+- PID_DATA1(8'h4B)
+- PID_ACK(8'hD2)
+- PID_NAK(8'h5A)
+- PID_STALL(8'h1E)
+
+And we will define some states work in a state machine, which types are also 'localparam'. There are 13 states that will be assigned the values from 4'd00 to 4'd12. The 13 states are listed as follows:
+- STATE_IDLE
+- STATE_RX_DATA
+- STATE_TX_PID
+- STATE_TX_DATA
+- STATE_TX_CRC1
+- STATE_TX_CRC2
+- STATE_TX_TOKEN1
+- STATE_TX_TOKEN2
+- STATE_TX_TOKEN3
+- STATE_TX_ACKNAK
+- STATE_TX_WAIT
+- STATE_RX_WAIT
+- STATE_TX_IFS
+
+assistant:
+- You would define the constants and state parameters using the `localparam` directive as follows:
+
+```verilog
+module usb_sie
+#(
+    parameter USB_CLK_FREQ = 60000000
+)
+(
+    //...
+    // Inputs, Outputs, Registers and Wires go here
+    //...
+);
+
+    // Constants
+    localparam RX_TIMEOUT = (USB_CLK_FREQ == 60000000) ? 9'd511 : 9'd255;
+    localparam TX_IFS = (USB_CLK_FREQ == 60000000) ? 4'd10 : 4'd7;
+    localparam PID_OUT = 8'hE1;
+    localparam PID_IN = 8'h69;
+    localparam PID_SOF = 8'hA5;
+    localparam PID_SETUP = 8'h2D;
+    localparam PID_DATA0 = 8'hC3;
+    localparam PID_DATA1 = 8'h4B;
+    localparam PID_ACK = 8'hD2;
+    localparam PID_NAK = 8'h5A;
+    localparam PID_STALL = 8'h1E;
+
+    // State Machine
+    localparam STATE_IDLE = 4'd0;
+    localparam STATE_RX_DATA = 4'd1;
+    localparam STATE_TX_PID = 4'd2;
+    localparam STATE_TX_DATA = 4'd3;
+    localparam STATE_TX_CRC1 = 4'd4;
+    localparam STATE_TX_CRC2 = 4'd5;
+    localparam STATE_TX_TOKEN1 = 4'd6;
+    localparam STATE_TX_TOKEN2 = 4'd7;
+    localparam STATE_TX_TOKEN3 = 4'd8;
+    localparam STATE_TX_ACKNAK = 4'd9;
+    localparam STATE_TX_WAIT = 4'd10;
+    localparam STATE_RX_WAIT = 4'd11;
+    localparam STATE_TX_IFS = 4'd12;
+
+    // Description of the module behaviour should be added here.
+
+endmodule
+```
+Again, this is a template. Replace comments with actual definitions and code.
+
+user:
+- Then we need to add other registers. We need 3 registers: utmi_linestate(2bits), se0_detect and wait_eop to detect end of transmit(token, data or ACK/NAK). To strip the CRC16 trailing bytes, we need other 3 registers: data_buffer(32bits), data_valid(4bits) and rx_active(4bits). What's more, we need the data_crc register(2bits) and next_state register(4bits).
+
+You need to denote all registers with _q.
+
+assistant:
+- You can add the needed registers as follows:
+
+```verilog
+module usb_sie
+#(
+    parameter USB_CLK_FREQ = 60000000
+)
+(
+    //...
+    // Inputs, Outputs, Registers, Wires and Constants go here
+    //...
+);
+
+    // Additional Registers
+    reg [1:0] utmi_linestate_q;
+    reg se0_detect_q;
+    reg wait_eop_q;
+    reg [31:0] data_buffer_q;
+    reg [3:0] data_valid_q;
+    reg [3:0] rx_active_q;
+    reg [1:0] data_crc_q;
+    reg [3:0] next_state_q;
+
+    // Description of the module behaviour should be added here.
+
+endmodule
+```
+As with the previous sections, this is a template. Replace comments with actual definitions and code.
+
+user:
+- We need a constant named TX_IFS_W which is equal to 4, and we need a reg tx_ifs(TX_IFS_W bits).
+
+Then we need to add other registers. First, we need some wires to deal with Rx data. They are listed as follows.
+- rx_data(8bits)
+- data_ready
+- crc_byte
+- rx_active
+- rx_active_rise
+
+Second, we need a wire to record Tx/Rx IFS timeout. The wire is named ifs_busy. And we need to record whether the response is timeout by using a wire named rx_resp_timeout. When the last_tx_time_q >= RX_TIMEOUT and wait_resp_q is set, rx_resp_timeout_w is set.
+
+Third, we set the wire se0_detect(active when utmi_linestate_i and utmi_linestate_q are equal to 0) and eop_detected(active when se0_select_q is active and utmi_linestate_i aren't equal to 0).
+
+Then, please generate a wire shift_en (active when utmi_rxvalid_i and utmi_rxactive_i are active or utmi_rxactive_i is inactive)
+
+Finally, we need to record CRC16 error on received data by using a wire crc_error(active when state_q is equal to STATE_RX_DATA, rx_active_w is inactive AND in_transfer_q is active, status_response_q chooses PID_DATA0 OR PID_DATA1 AND crc_sum_q != 16'hB001).
+
+You need to denote all registers with _q and all wires with _w.
+
+assistant:
+- This is how you add the additional registers and wires to your module:
+
+```verilog
+module usb_sie
+#(
+    parameter USB_CLK_FREQ = 60000000
+)
+(
+    //...
+    // Inputs, Outputs, Registers, Wires and Constants go here
+    //...
+);
+
+    // Additional Registers and Constants
+    localparam TX_IFS_W = 4;
+    reg [TX_IFS_W-1:0] tx_ifs;
+
+    // Rx Data Wires
+    wire [7:0] rx_data_w;
+    wire data_ready_w;
+    wire crc_byte_w;
+    wire rx_active_w;
+    wire rx_active_rise_w;
+
+    // IFS Timeout and Response Timeout Wires
+    wire ifs_busy_w;
+    wire rx_resp_timeout_w = (last_tx_time_q >= RX_TIMEOUT) && wait_resp_q;
+
+    // SE0 Detection and End of Packet Detection Wires
+    wire se0_detect_w = (utmi_linestate_i == 2'b00) && (utmi_linestate_q == 2'b00);
+    wire eop_detected_w = se0_detect_q && (utmi_linestate_i != 2'b00);
+
+    // Shift Enable Wire
+    wire shift_en_w = (utmi_rxvalid_i && utmi_rxactive_i) || (!utmi_rxactive_i);
+
+    // CRC16 Error Detection Wire
+    wire crc_error_w = (state_q == STATE_RX_DATA) && (!rx_active_w) && in_transfer_q && ((status_response_q == PID_DATA0) || (status_response_q == PID_DATA1)) && (crc_sum_q != 16'hB001);
+
+    // Description of the module behaviour should be added here.
+
+endmodule
+```
+Replace comments with actual definitions and code. This is just a template.
+
+user:
+- Then, you need to add another sequential logic block, which is triggered by clock's posedge or rstn's negedge. If rstn is inactive, except reg crc_sum will be reset by 16'hffff, all 24 registers you generate above will be reset by 0. Please don't omit the process!
+
+If rstn is active, you need to update reg linestate and se0_detect, update reg rx_active by splitingg utmi_rxactive and itself([3:1]), then If start counting down from last Tx(wait_eop) or EOP being detected at end of Rx, the reg tx_ifs will be assigned to TX_IFS. Otherwise, the reg tx_ifs will be decreased if it isn't equal to 0. In addition, you need to check wire shift_en, if it is active. You need to save data in order to achieve data delay. First, you need to update data_buffer by spliting input utmi data and itself([31:8]). Second, you need to update data_valid by spliting a bit(which is from input utmi rxvalid & utmi rxactive) and itself([3:1]), Third, update reg data_crc by spliting !utmi_rxactive and itself([1]). If shift_en is inactive, you need to update data valid by spliting itself([3:1]) and 1'b0.
+
+assistant:
+- Here is how you can define your sequential logic block to be triggered by either the positive edge of the clock or the negative edge of the reset signal:
+
+```verilog
+module usb_sie
+#(
+    parameter USB_CLK_FREQ = 60000000
+)
+(
+    //...
+    // Inputs, Outputs, Registers, Wires and Constants go here
+    //...
+);
+
+    //... existing code …
+
+    always @(posedge clk or negedge rstn) begin // Sequential logic block
+        // If reset is active
+        if(!rstn) begin
+            start_ack_q <= 0;
+            status_tx_done_q <= 0;
+            status_rx_done_q <= 0;
+            status_crc_err_q <= 0;
+            status_timeout_q <= 0;
+            status_response_q <= 0;
+            byte_count_q <= 0;
+            in_transfer_q <= 0;
+            last_tx_time_q <= 0;
+            send_data1_q <= 0;
+            send_sof_q <= 0;
+            send_ack_q <= 0;
+            crc_sum_q <= 16'hffff;
+            token_q <= 0;
+            wait_resp_q <= 0;
+            state_q <= 0;
+            utmi_linestate_q <= 0;
+            se0_detect_q <= 0;
+            wait_eop_q <= 0;
+            data_buffer_q <= 0;
+            data_valid_q <= 0;
+            rx_active_q <= 0;
+            data_crc_q <= 0;
+            next_state_q <= 0;
+            tx_ifs <= 0;
+        end
+        // If not in reset state
+        else begin
+            utmi_linestate_q <= utmi_linestate_i;
+            se0_detect_q <= (utmi_linestate_i == 2'b00);
+
+            if (shift_en_w) begin
+                data_buffer_q <= {utmi_data_i, data_buffer_q[31:8]};
+                data_valid_q <= {(utmi_rxvalid_i & utmi_rxactive_i), data_valid_q[3:1]};
+                data_crc_q <= {~utmi_rxactive_i, data_crc_q[1]};
+            end
+            else begin
+                data_valid_q <= {data_valid_q[3:1], 1'b0};
+            end
+
+            if ((wait_eop_q == 1'b1) | (eop_detected_w == 1'b1)) begin
+                tx_ifs <= TX_IFS;
+            end
+            else if (tx_ifs != 0) begin
+                tx_ifs <= tx_ifs - 1;
+            end
+
+            rx_active_q <= {utmi_rxactive_i, rx_active_q[3:1]};
+        end
+    end
+endmodule
+```
+
+Please replace `//... existing code …` comment with actual existing code in your file. The template provides logic on reset and clock positive edge. A detailed description of module behaviour should be placed inside the main module.
+
+user:
+- se0_detect_q is assigned to se0_detect_w
+
+assistant:
+- Here is what you meant to say. The existing se0_detect_q assignment should be replaced with the following in the always block:
+
+```verilog
+//...
+// Inside always block after else begin...
+se0_detect_q <= se0_detect_w;
+//...
+```
+
+So it will become:
+
+```verilog
+always @(posedge clk or negedge rstn) begin // Sequential logic block
+    // If reset is active
+    if(!rstn) begin
+        //... resets ...
+    end
+    // If not in reset state
+    else begin
+        utmi_linestate_q <= utmi_linestate_i;
+        se0_detect_q <= se0_detect_w;  // Here it is changed from utmi_linestate_i == 2'b00 to se0_detect_w
+
+        if (shift_en_w) begin
+            //... other registers update...
+        end
+        else begin
+            //... data_valid_q update when shift_en_w is not active...
+        end
+
+        if ((wait_eop_q == 1'b1) | (eop_detected_w == 1'b1)) begin
+            tx_ifs <= TX_IFS;
+        end
+        else if (tx_ifs != 0) begin
+            tx_ifs <= tx_ifs - 1;
+        end
+
+        rx_active_q <= {utmi_rxactive_i, rx_active_q[3:1]};
+    end
+end
+```
+
+user:
+- So, give this sequential logic block completely
+
+assistant:
+- Here is your complete sequential logic block:
+
+```verilog
+always @(posedge clk or negedge rstn) begin // Sequential logic block
+    // If reset is active
+    if (!rstn) begin
+        start_ack_q <= 0;
+        status_tx_done_q <= 0;
+        status_rx_done_q <= 0;
+        status_crc_err_q <= 0;
+        status_timeout_q <= 0;
+        status_response_q <= 0;
+        byte_count_q <= 0;
+        in_transfer_q <= 0;
+        last_tx_time_q <= 0;
+        send_data1_q <= 0;
+        send_sof_q <= 0;
+        send_ack_q <= 0;
+        crc_sum_q <= 16'hffff;
+        token_q <= 0;
+        wait_resp_q <= 0;
+        state_q <= 0;
+        utmi_linestate_q <= 0;
+        se0_detect_q <= 0;
+        wait_eop_q <= 0;
+        data_buffer_q <= 0;
+        data_valid_q <= 0;
+        rx_active_q <= 0;
+        data_crc_q <= 0;
+        next_state_q <= 0;
+        tx_ifs <= 0;
+    end else begin // If not in reset
+        utmi_linestate_q <= utmi_linestate_i;
+        se0_detect_q <= se0_detect_w;
+
+        if (shift_en_w) begin
+            data_buffer_q <= {utmi_data_i, data_buffer_q[31:8]};
+            data_valid_q <= {(utmi_rxvalid_i & utmi_rxactive_i), data_valid_q[3:1]};
+            data_crc_q <= {!utmi_rxactive_i, data_crc_q[1]};
+        end else begin
+            data_valid_q <= {data_valid_q[3:1], 1'b0};
+        end
+
+        if ((wait_eop_q == 1'b1) | (eop_detected_w == 1'b1)) begin
+            tx_ifs <= TX_IFS;
+        end else if (tx_ifs != 'b0) begin
+            tx_ifs <= tx_ifs - 1'b1;
+        end
+
+        rx_active_q <= {utmi_rxactive_i, rx_active_q[3:1]};
+    end
+end
+```
+The above code resets registers when reset is active. When reset is not active, it updates the registers based on the current input signals and previously stored register values.
