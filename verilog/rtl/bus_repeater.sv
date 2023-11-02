@@ -951,10 +951,11 @@ bus_rep_east  #(
 //---------------------------------------------------------
 // No Repeated added for these ports yet
 //---------------------------------------------------------
-//assign io_oeb[14:0]    = io_oeb_int[14:0];
-//assign io_out[14:0]    = io_out_int[14:0];
+assign io_oeb[14:0]    = io_oeb_int[14:0];
+assign io_out[14:0]    = io_out_int[14:0];
 assign io_in_rp[37:0]    = {io_in_rp2[37:24],io_in_rp1[23:0]};
 
-//assign io_oeb[37:24]    = io_oeb_int[37:24];
-//assign io_out[37:24]    = io_out_int[37:24];
-//assign io_in_rp1[37:24]  = io_in[37:24];
+assign io_oeb[37:24]    = io_oeb_int[37:24];
+assign io_out[37:24]    = io_out_int[37:24];
+assign io_in_rp1[37:24]  = io_in[37:24];
+

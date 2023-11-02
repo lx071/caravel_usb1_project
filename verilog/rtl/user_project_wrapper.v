@@ -164,7 +164,7 @@ wire                           s_reset_n_rp                           ;
 assign cfg_wcska_wi          = cfg_clk_skew_ctrl1[3:0];
 assign cfg_wcska_wh          = cfg_clk_skew_ctrl1[7:4];
 
-wire [127:0] la_data_out_int    = {pinmux_debug,spi_debug,riscv_debug};
+wire [127:0] la_data_out_int    = 0;
 
 wire   int_pll_clock       = pll_clk_out[0];
 
@@ -172,14 +172,15 @@ wire   int_pll_clock       = pll_clk_out[0];
 //----------------------------------------------------------
 // Bus Repeater Initiatiation
 //----------------------------------------------------------
-wire  [37:0]                io_in_rp           ;
-wire  [37:0]                io_in_rp1          ;
-wire  [37:0]                io_in_rp2          ;
-wire  [37:0]                io_out_int         ;
-wire  [37:0]                io_oeb_int         ;
-wire  [37:0]                io_out_rp1         ;
-wire  [37:0]                io_oeb_rp1         ;
+wire  [37:0]                io_in_rp;
+wire  [37:0]                io_in_rp1;
+wire  [37:0]                io_in_rp2;
+wire  [37:0]                io_out_int;
+wire  [37:0]                io_oeb_int;
+wire  [37:0]                io_out_rp1;
+wire  [37:0]                io_oeb_rp1;
 wire                        user_clock2_rp     ;
+
 
 `include "bus_repeater.sv"
 
